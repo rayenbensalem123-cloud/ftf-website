@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { PageHead } from "@/components/page-head";
 
 export const Route = createFileRoute("/contact")({
+  head: () => ({ meta: [{ title: "Contact & plan du site — FTF" }] }),
   component: Contact,
 });
 

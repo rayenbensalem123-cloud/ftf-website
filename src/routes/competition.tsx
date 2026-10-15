@@ -6,6 +6,7 @@ import { PageHead } from "@/components/page-head";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/competition")({
+  head: () => ({ meta: [{ title: "Compétition & résultats — FTF" }] }),
   component: Competition,
 });
 

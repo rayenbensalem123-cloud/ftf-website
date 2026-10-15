@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { PageHead } from "@/components/page-head";
 
 export const Route = createFileRoute("/classement")({
+  head: () => ({ meta: [{ title: "Classement Ligue 1 — FTF" }] }),
   component: Classement,
 });
 

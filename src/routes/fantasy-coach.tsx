@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const Route = createFileRoute("/fantasy-coach")({
+  head: () => ({ meta: [{ title: "Fantasy Coach — FTF" }] }),
   component: FantasyCoach,
 });
 

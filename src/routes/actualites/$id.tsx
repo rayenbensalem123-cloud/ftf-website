@@ -4,6 +4,10 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const Route = createFileRoute("/actualites/$id")({
+  head: ({ params }) => {
+    const a = articleById(params.id);
+    return { meta: [{ title: a ? `${a.title} — FTF` : "Article — FTF" }] };
+  },
   component: Article,
 });
 

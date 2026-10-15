@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { PageHead } from "@/components/page-head";
 
 export const Route = createFileRoute("/actualites/")({
+  head: () => ({ meta: [{ title: "Actualités — FTF" }] }),
   component: Actualites,
 });
 

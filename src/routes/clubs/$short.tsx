@@ -5,6 +5,10 @@ import { SiteHeader } from "@/components/site-header";
 import { PageHead } from "@/components/page-head";
 
 export const Route = createFileRoute("/clubs/$short")({
+  head: ({ params }) => {
+    const club = clubByShort(params.short);
+    return { meta: [{ title: club ? `${club.name} — FTF` : "Club — FTF" }] };
+  },
   component: ClubDetail,
 });
 
