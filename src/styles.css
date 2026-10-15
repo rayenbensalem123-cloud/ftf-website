@@ -22,8 +22,11 @@
   --color-brand-red: var(--brand-red);
   --color-brand-deep: var(--brand-deep);
   --color-brand-gold: var(--brand-gold);
-  --font-display: "Bebas Neue", sans-serif;
-  --font-sans: "Barlow", sans-serif;
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-paper: var(--brand-paper);
+  --font-display: var(--font-display-stack);
+  --font-sans: var(--font-sans-stack);
+  --font-condensed: var(--font-condensed-stack);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -68,8 +71,13 @@
 
 :root {
   --brand-red: oklch(0.51 0.215 27);
-  --brand-deep: oklch(0.16 0.02 20);
+  --brand-deep: oklch(0.2 0.038 264);
   --brand-gold: oklch(0.75 0.13 88);
+  --brand-ink: oklch(0.17 0.02 264);
+  --brand-paper: oklch(0.975 0.004 250);
+  --font-display-stack: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans-stack: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-condensed-stack: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
   --gradient-hero: radial-gradient(circle at 75% 30%, oklch(0.58 0.24 27 / 0.55), transparent 55%), linear-gradient(160deg, oklch(0.16 0.02 20), oklch(0.1 0.01 20));
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -149,45 +157,127 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    background-image:
-      linear-gradient(to bottom, oklch(0.42 0.19 27 / 0.88), oklch(0.22 0.14 25 / 0.94)),
-      url("./assets/trophy.jpg");
-    background-size: cover;
-    background-position: center 30%;
-    background-attachment: fixed;
+    font-family: var(--font-sans-stack);
   }
 
-  .ribbon-link[data-active="true"] {
-    text-decoration: underline;
-    text-decoration-color: var(--brand-gold);
-    text-decoration-thickness: 3px;
-    text-underline-offset: 6px;
+  /* ── Typography scale ────────────────────────────────────────────── */
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
-  .mobile-link[data-active="true"] {
+  .title-page {
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: clamp(1.875rem, 3.2vw, 2.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+
+  .title-section {
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+    font-size: clamp(1.25rem, 1.9vw, 1.625rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .title-card {
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+  }
+
+  .score {
+    font-family: var(--font-condensed-stack);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Header navigation ───────────────────────────────────────────── */
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.55rem 0.6rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: color-mix(in oklab, var(--foreground) 76%, transparent);
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover {
     color: var(--brand-red);
-    background-color: var(--muted);
+  }
+
+  .nav-link[data-active="true"] {
+    color: var(--brand-ink);
+  }
+
+  .nav-link[data-active="true"]::after {
+    content: "";
+    position: absolute;
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: 0.15rem;
+    height: 2px;
+    background: var(--brand-red);
+  }
+
+  .utility-link {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, white 72%, transparent);
+    transition: color 0.15s ease;
+  }
+
+  .utility-link:hover {
+    color: #fff;
+  }
+
+  .mega-panel {
+    min-width: 17rem;
+    padding: 0.4rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 44px -14px oklch(0.2 0.05 264 / 0.3);
+  }
+
+  .mega-item {
+    display: block;
+    padding: 0.55rem 0.7rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  .mega-item:hover {
+    background: var(--brand-paper);
+    color: var(--brand-red);
+  }
+
+  .mega-item small {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
   }
 
   @keyframes ticker {
     to {
       transform: translateX(-50%);
     }
-  }
-
-  .nav-pill[data-active="true"] {
-    background-color: var(--brand-red);
-    border-color: var(--brand-red);
-    color: #fff;
-  }
-
-  .mast-link[data-active="true"] {
-    color: var(--brand-red);
-    box-shadow: inset 0 -3px 0 var(--brand-gold);
-  }
-
-  .mast-link:hover {
-    box-shadow: inset 0 -3px 0 var(--brand-red);
   }
 }
 

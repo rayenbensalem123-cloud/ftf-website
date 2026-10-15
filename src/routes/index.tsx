@@ -16,9 +16,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "FTF — Fédération Tunisienne de Football" },
-      { name: "description", content: "The home of Tunisian football: Les Aigles de Carthage, Ligue 1 clubs, fixtures and news." },
+      { name: "description", content: "Le football tunisien : les Aigles de Carthage, la Ligue 1, les résultats et les actualités officielles." },
       { property: "og:title", content: "FTF — Fédération Tunisienne de Football" },
-      { property: "og:description", content: "Les Aigles de Carthage, Ligue 1 clubs, fixtures and news." },
+      { property: "og:description", content: "Les Aigles de Carthage, la Ligue 1 et les actualités officielles." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -26,204 +26,218 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-function Logo({ src, alt, size = "h-8 w-8" }: { src: string; alt: string; size?: string }) {
+function Crest({ src, alt, size = "h-7 w-7" }: { src: string; alt: string; size?: string }) {
   return <img src={src} alt={alt} className={`${size} object-contain`} />;
 }
 
 function Index() {
-  const [featured, second, ...cards] = ARTICLES as [typeof ARTICLES[number], typeof ARTICLES[number], ...typeof ARTICLES];
+  const featured = ARTICLES[0]!;
+  const rest = ARTICLES.slice(1);
 
   return (
     <div className="min-h-screen font-sans text-foreground">
       <SiteHeader />
 
-      {/* Section head */}
-      <div className="mx-auto mt-8 flex max-w-7xl flex-wrap items-end justify-between gap-3 px-4">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-brand-gold">
-            À la une · 6e journée
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section className="relative isolate overflow-hidden bg-brand-ink text-white">
+        <img
+          src={STADIUM_IMG}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink via-brand-ink/90 to-brand-ink/40" />
+        <div className="relative mx-auto max-w-7xl px-4 pb-28 pt-14 md:pt-20">
+          <p className="eyebrow text-brand-gold">Fédération Tunisienne de Football · Saison 2026</p>
+          <h1 className="title-page mt-4 max-w-4xl text-4xl text-white md:text-6xl">
+            Le football tunisien vit ici
+          </h1>
+          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/70">
+            Compétitions nationales, Aigles de Carthage et actualités officielles — de Radès à Bizerte,
+            toute la vie du football tunisien réunie en un seul endroit.
           </p>
-          <h1 className="font-display text-5xl leading-none text-white md:text-6xl">Le football tunisien vit ici</h1>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link
+              to="/competition"
+              className="rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:brightness-110"
+            >
+              Compétitions &amp; résultats
+            </Link>
+            <Link
+              to="/billetterie"
+              className="rounded-full border border-white/35 px-6 py-3 text-sm font-bold text-white transition hover:border-white hover:bg-white/5"
+            >
+              Billetterie
+            </Link>
+          </div>
         </div>
-        <Link to="/actualites" className="font-bold text-white">
-          Toutes les actualités →
-        </Link>
-      </div>
+      </section>
 
-      {/* Red panel — fixtures + headlines */}
-      <section className="mx-auto mt-4 max-w-7xl px-4">
-        <div className="relative overflow-hidden rounded-3xl bg-brand-red p-4 shadow-xl ring-1 ring-white/25 md:p-6">
-          <img
-            src={FTF_LOGO}
-            alt=""
-            aria-hidden
-            className="pointer-events-none absolute -bottom-44 left-1/3 w-[42rem] opacity-10"
-          />
-          <div className="relative grid gap-5 lg:grid-cols-[340px_1fr]">
-            {/* Sidebar */}
-            <aside className="space-y-5">
-              <div className="rounded-3xl bg-card p-5 shadow-lg">
-                <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                  Match week 6
-                </p>
-                <div className="mt-1 flex items-center justify-center gap-3 font-bold text-brand-red">
-                  <span>Professional</span>
-                  <Logo src={FTF_LOGO} alt="FTF" />
-                  <span>Ligue 1</span>
+      {/* ── Scoreboard (overlaps hero) ───────────────────────────────── */}
+      <section className="relative z-10 mx-auto -mt-16 max-w-7xl px-4">
+        <div className="grid overflow-hidden rounded-3xl border border-border bg-card shadow-2xl md:grid-cols-2">
+          <div className="p-6 md:border-r md:border-border">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow text-brand-red">Prochaines rencontres</p>
+              <Link to="/competition" className="text-xs font-bold text-muted-foreground hover:text-brand-red">
+                Calendrier →
+              </Link>
+            </div>
+            <div className="mt-4 divide-y divide-border">
+              {FIXTURES.map((f) => (
+                <div key={f.id} className="flex items-center justify-between gap-3 py-3">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <Crest src={f.home.logo} alt={f.home.name} />
+                    <span className="text-sm font-bold">{f.home.short}</span>
+                    <span className="text-xs text-muted-foreground">vs</span>
+                    <span className="text-sm font-bold">{f.away.short}</span>
+                    <Crest src={f.away.logo} alt={f.away.name} />
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <p className="score text-base leading-none">{f.time}</p>
+                    <p className="text-[11px] text-muted-foreground">{f.date}</p>
+                  </div>
                 </div>
-                <p className="mt-1 text-center font-display text-2xl">18 octobre 2026</p>
-                <div className="mt-3 divide-y divide-border">
-                  {FIXTURES.map((f) => (
-                    <div key={f.id} className="py-3" title={f.venue}>
-                      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-sm font-bold">
-                        <div className="flex items-center justify-end gap-2">
-                          {f.home.short}
-                          <Logo src={f.home.logo} alt={f.home.name} />
-                        </div>
-                        <span className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-muted-foreground">
-                          {f.time}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <Logo src={f.away.logo} alt={f.away.name} />
-                          {f.away.short}
-                        </div>
-                      </div>
-                      <p className="mt-1 text-center text-[11px] font-medium text-muted-foreground">{f.venue}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-3xl bg-card p-5 shadow-lg">
-                <p className="text-center font-display text-2xl">Match week 5 results</p>
-                <div className="mt-3 space-y-3">
-                  {RESULTS.map((r) => (
-                    <div key={r.id} className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-sm font-bold">
-                      <div className="flex items-center justify-end gap-2">
-                        {r.home.short}
-                        <Logo src={r.home.logo} alt={r.home.name} />
-                      </div>
-                      <div className="flex gap-1">
-                        {[r.hs, r.as].map((n, j) => (
-                          <span
-                            key={j}
-                            className="grid h-9 w-8 place-items-center rounded bg-brand-red font-display text-2xl text-primary-foreground"
-                          >
-                            {n}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Logo src={r.away.logo} alt={r.away.name} />
-                        {r.away.short}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <Link
-                  to="/competition"
-                  className="mt-5 block rounded-full bg-brand-red py-2 text-center font-display text-xl tracking-wide text-primary-foreground transition hover:opacity-90"
-                >
-                  View all →
-                </Link>
-              </div>
-            </aside>
+              ))}
+            </div>
+          </div>
 
-            {/* Headlines */}
-            <div className="space-y-5">
-              <article className="relative overflow-hidden rounded-3xl border-4 border-card shadow-xl">
-                <img
-                  src={STADIUM_IMG}
-                  alt="Stade Hammadi Agrebi plein pour la CAN"
-                  width={1600}
-                  height={912}
-                  className="h-80 w-full object-cover md:h-[26rem]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent" />
-                <img src={FTF_LOGO} alt="" aria-hidden className="absolute right-8 top-6 h-24 w-24 opacity-90" />
-                <div className="absolute bottom-0 max-w-2xl p-6 text-primary-foreground">
-                  <span className="rounded-full bg-brand-red px-3 py-1 text-xs font-bold uppercase tracking-widest">
-                    {featured.category}
-                  </span>
-                  <h2 className="mt-3 font-display text-4xl leading-none md:text-5xl">
-                    <Link to="/actualites/$id" params={{ id: featured.id }} className="hover:underline">
-                      {featured.title}
-                    </Link>
-                  </h2>
-                  <p className="mt-2 max-w-xl text-sm text-primary-foreground/80">{featured.excerpt}</p>
+          <div className="border-t border-border p-6 md:border-t-0">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow text-brand-red">Derniers résultats</p>
+              <Link to="/competition" className="text-xs font-bold text-muted-foreground hover:text-brand-red">
+                Tous les matchs →
+              </Link>
+            </div>
+            <div className="mt-4 divide-y divide-border">
+              {RESULTS.map((r) => (
+                <div key={r.id} className="flex items-center justify-between gap-3 py-3">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <Crest src={r.home.logo} alt={r.home.name} />
+                    <span className="text-sm font-bold">{r.home.short}</span>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    <span className="score grid h-8 w-8 place-items-center rounded bg-brand-ink text-lg leading-none text-white">
+                      {r.hs}
+                    </span>
+                    <span className="score grid h-8 w-8 place-items-center rounded bg-brand-ink text-lg leading-none text-white">
+                      {r.as}
+                    </span>
+                  </div>
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <span className="text-sm font-bold">{r.away.short}</span>
+                    <Crest src={r.away.logo} alt={r.away.name} />
+                  </div>
                 </div>
-              </article>
-              <article className="grid overflow-hidden rounded-3xl bg-card shadow-lg md:grid-cols-2">
-                <img
-                  src={TROPHY_IMG}
-                  alt="Espérance soulève le trophée continental"
-                  loading="lazy"
-                  width={1200}
-                  height={800}
-                  className="h-64 w-full object-cover md:h-full"
-                />
-                <div className="p-6">
-                  <p className="text-sm font-bold uppercase tracking-widest text-brand-red">{second.category}</p>
-                  <h3 className="mt-2 font-display text-4xl leading-none">{second.title}</h3>
-                  <p className="mt-3 text-muted-foreground">{second.excerpt}</p>
-                  <Link
-                    to="/actualites/$id"
-                    params={{ id: second.id }}
-                    className="mt-4 inline-block font-bold text-brand-red"
-                  >
-                    Read more →
-                  </Link>
-                </div>
-              </article>
-              <div className="grid gap-5 md:grid-cols-2">
-                {cards.map((a) => (
-                  <article key={a.id} className="rounded-3xl bg-card/95 p-6 shadow-lg">
-                    <p className="text-sm font-bold uppercase tracking-widest text-brand-red">{a.category}</p>
-                    <h3 className="mt-1 font-display text-3xl leading-none">
-                      <Link to="/actualites/$id" params={{ id: a.id }} className="hover:text-brand-red">
-                        {a.title}
-                      </Link>
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{a.excerpt}</p>
-                  </article>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Match centre — prochain match */}
-      <section className="mx-auto mt-6 max-w-7xl px-4">
-        <div className="grid items-center gap-6 rounded-3xl bg-brand-deep px-6 py-6 text-primary-foreground md:grid-cols-[1fr_auto_1fr]">
-          <div className="flex items-center justify-center gap-4 md:justify-end">
+      {/* ── Actualités ───────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-4 py-14">
+        <div className="flex items-end justify-between gap-4 border-b border-border pb-4">
+          <div>
+            <p className="eyebrow text-brand-red">Actualités</p>
+            <h2 className="title-section mt-1.5">Dernières nouvelles</h2>
+          </div>
+          <Link
+            to="/actualites"
+            className="whitespace-nowrap text-sm font-bold text-brand-red hover:underline"
+          >
+            Toutes les actualités →
+          </Link>
+        </div>
+
+        <div className="mt-6 grid gap-6 lg:grid-cols-[1.55fr_1fr]">
+          <article className="group relative min-h-[22rem] overflow-hidden rounded-3xl">
+            <img
+              src={STADIUM_IMG}
+              alt={featured.title}
+              className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/40 to-transparent" />
+            <div className="relative flex h-full min-h-[22rem] flex-col justify-end p-6 md:p-8">
+              <span className="eyebrow w-fit rounded-full bg-brand-red px-3 py-1 text-white">
+                {featured.category}
+              </span>
+              <h3 className="title-section mt-3 max-w-xl text-white md:text-3xl">
+                <Link to="/actualites/$id" params={{ id: featured.id }} className="hover:underline">
+                  {featured.title}
+                </Link>
+              </h3>
+              <p className="mt-2.5 max-w-lg text-sm text-white/75">{featured.excerpt}</p>
+            </div>
+          </article>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+            {rest.slice(0, 3).map((a, i) => (
+              <article
+                key={a.id}
+                className="flex gap-4 border-b border-border pb-5 last:border-0 last:pb-0"
+              >
+                {i === 0 ? (
+                  <img
+                    src={TROPHY_IMG}
+                    alt=""
+                    loading="lazy"
+                    className="h-20 w-28 shrink-0 rounded-2xl object-cover"
+                  />
+                ) : (
+                  <span className="score grid h-20 w-16 shrink-0 place-items-center rounded-2xl bg-brand-paper text-3xl text-brand-red">
+                    {i + 1}
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <p className="eyebrow text-brand-red">{a.category}</p>
+                  <h3 className="title-card mt-1.5">
+                    <Link to="/actualites/$id" params={{ id: a.id }} className="hover:text-brand-red">
+                      {a.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">{a.excerpt}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Match centre ─────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-4 pb-14">
+        <div className="grid items-center gap-8 overflow-hidden rounded-3xl bg-brand-deep px-6 py-8 text-white md:grid-cols-[1fr_auto_1fr] md:px-10">
+          <div className="flex items-center justify-center gap-5 md:justify-end">
             <div className="text-center">
-              <img src={CLUBS[0]!.logo} alt="Espérance de Tunis" className="mx-auto h-20 w-20 object-contain" />
-              <p className="mt-2 font-display text-2xl tracking-wide">EST</p>
+              <Crest src={CLUBS[0]!.logo} alt={CLUBS[0]!.name} size="mx-auto h-20 w-20" />
+              <p className="mt-2 font-display text-xl font-bold">EST</p>
             </div>
             <div className="text-center">
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-brand-gold">J6 · Derby</p>
-              <p className="font-display text-4xl">VS</p>
-              <p className="text-xs text-primary-foreground/70">Dim 17:00 · Radès</p>
+              <p className="eyebrow text-brand-gold">J6 · Derby</p>
+              <p className="score mt-1 text-4xl leading-none">VS</p>
+              <p className="mt-1 text-[11px] text-white/60">Dim · 17:00 · Radès</p>
             </div>
             <div className="text-center">
-              <img src={CLUBS[1]!.logo} alt="Club Africain" className="mx-auto h-20 w-20 object-contain" />
-              <p className="mt-2 font-display text-2xl tracking-wide">CA</p>
+              <Crest src={CLUBS[1]!.logo} alt={CLUBS[1]!.name} size="mx-auto h-20 w-20" />
+              <p className="mt-2 font-display text-xl font-bold">CA</p>
             </div>
           </div>
-          <div className="hidden h-24 w-px bg-primary-foreground/15 md:block" />
+
+          <div className="hidden h-24 w-px bg-white/15 md:block" />
+
           <div className="text-center md:text-left">
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-brand-gold">Match centre</p>
-            <h2 className="mt-1 font-display text-3xl leading-none">Le derby de Tunis décide du titre</h2>
-            <div className="mt-3 flex flex-wrap justify-center gap-2 md:justify-start">
+            <p className="eyebrow text-brand-gold">Centre du match</p>
+            <h2 className="title-section mt-1.5 text-white">Le derby de Tunis décide du titre</h2>
+            <div className="mt-4 flex flex-wrap justify-center gap-3 md:justify-start">
               <Link
                 to="/billetterie"
-                className="rounded-full bg-brand-red px-5 py-2 font-display text-lg tracking-wide text-primary-foreground hover:opacity-90"
+                className="rounded-full bg-brand-red px-5 py-2.5 text-sm font-bold text-white transition hover:brightness-110"
               >
                 Billetterie →
               </Link>
               <Link
                 to="/competition"
-                className="rounded-full border border-primary-foreground/30 px-5 py-2 font-display text-lg tracking-wide hover:border-primary-foreground"
+                className="rounded-full border border-white/35 px-5 py-2.5 text-sm font-bold transition hover:border-white hover:bg-white/5"
               >
                 Centre du match →
               </Link>
@@ -232,133 +246,144 @@ function Index() {
         </div>
       </section>
 
-      {/* Table + clubs */}
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 lg:grid-cols-[1fr_1.4fr]">
-        <div className="h-fit rounded-3xl border border-border bg-card p-6">
-          <div className="flex items-baseline justify-between">
-            <h2 className="font-display text-4xl text-white">Classement</h2>
-            <Link to="/classement" className="text-sm font-bold text-white">
-              Complet →
-            </Link>
-          </div>
-          <table className="mt-4 w-full text-sm">
-            <thead className="text-left text-muted-foreground">
-              <tr>
-                <th className="py-2">#</th>
-                <th>Club</th>
-                <th>J</th>
-                <th className="text-right">Pts</th>
-              </tr>
-            </thead>
-            <tbody>
-              {STANDINGS.map((r, i) => (
-                <tr key={r.club.short} className="border-t border-border">
-                  <td className="py-3 font-bold text-brand-red">{i + 1}</td>
-                  <td>
-                    <Link
-                      to="/clubs/$short"
-                      params={{ short: r.club.short.toLowerCase() }}
-                      className="flex items-center gap-3 font-medium hover:text-brand-red"
-                    >
-                      <Logo src={r.club.logo} alt={r.club.name} />
-                      {r.club.name}
-                    </Link>
-                  </td>
-                  <td>{r.played}</td>
-                  <td className="text-right font-display text-xl">{r.pts}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <div className="flex items-baseline justify-between">
-            <h2 className="font-display text-4xl text-white">Les Clubs</h2>
-            <Link to="/clubs" className="text-sm font-bold text-white">
-              Tous les clubs →
-            </Link>
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {CLUBS.map((club) => (
-              <Link
-                key={club.short}
-                to="/clubs/$short"
-                params={{ short: club.short.toLowerCase() }}
-                className="group rounded-3xl border border-border bg-card p-5 text-center transition hover:-translate-y-1 hover:border-brand-red hover:shadow-xl"
-              >
-                <Logo
-                  src={club.logo}
-                  alt={club.name}
-                  size="mx-auto h-20 w-20 transition group-hover:scale-110"
-                />
-                <h3 className="mt-3 font-display text-2xl leading-none">{club.name}</h3>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground">
-                  {club.city} · {club.year}
-                </p>
+      {/* ── Classement + clubs ───────────────────────────────────────── */}
+      <section className="border-y border-border bg-brand-paper">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-[1fr_1.4fr]">
+          <div className="h-fit overflow-hidden rounded-3xl border border-border bg-card">
+            <div className="flex items-baseline justify-between border-b border-border px-6 py-4">
+              <h2 className="title-section">Classement</h2>
+              <Link to="/classement" className="text-sm font-bold text-brand-red hover:underline">
+                Complet →
               </Link>
-            ))}
+            </div>
+            <table className="w-full text-sm">
+              <thead className="text-left text-muted-foreground">
+                <tr>
+                  <th className="px-6 py-2 font-semibold">#</th>
+                  <th className="py-2 font-semibold">Club</th>
+                  <th className="py-2 font-semibold">J</th>
+                  <th className="px-6 py-2 text-right font-semibold">Pts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {STANDINGS.map((r, i) => (
+                  <tr key={r.club.short} className="border-t border-border/70">
+                    <td className="px-6 py-3 font-bold text-brand-red">{i + 1}</td>
+                    <td className="py-3">
+                      <Link
+                        to="/clubs/$short"
+                        params={{ short: r.club.short.toLowerCase() }}
+                        className="flex items-center gap-3 font-semibold hover:text-brand-red"
+                      >
+                        <Crest src={r.club.logo} alt={r.club.name} />
+                        {r.club.name}
+                      </Link>
+                    </td>
+                    <td className="py-3 text-muted-foreground">{r.played}</td>
+                    <td className="px-6 py-3 text-right">
+                      <span className="score text-xl">{r.pts}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <div className="flex items-baseline justify-between">
+              <h2 className="title-section">Les Clubs</h2>
+              <Link to="/clubs" className="text-sm font-bold text-brand-red hover:underline">
+                Tous les clubs →
+              </Link>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {CLUBS.map((club) => (
+                <Link
+                  key={club.short}
+                  to="/clubs/$short"
+                  params={{ short: club.short.toLowerCase() }}
+                  className="group rounded-3xl border border-border bg-card p-5 text-center transition hover:-translate-y-1 hover:border-brand-red hover:shadow-xl"
+                >
+                  <Crest
+                    src={club.logo}
+                    alt={club.name}
+                    size="mx-auto h-20 w-20 transition group-hover:scale-110"
+                  />
+                  <h3 className="title-card mt-3">{club.name}</h3>
+                  <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                    {club.city} · {club.year}
+                  </p>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Documents officiels */}
-      <section className="mx-auto max-w-7xl px-4">
-        <div className="mb-3 flex items-baseline justify-between">
-          <h2 className="font-display text-4xl text-white">Documents officiels</h2>
-          <Link to="/documents" className="text-sm font-bold text-white">
+      {/* ── Documents officiels ──────────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-4 py-14">
+        <div className="flex items-end justify-between gap-4 border-b border-border pb-4">
+          <div>
+            <p className="eyebrow text-brand-red">Transparence</p>
+            <h2 className="title-section mt-1.5">Documents officiels</h2>
+          </div>
+          <Link to="/documents" className="whitespace-nowrap text-sm font-bold text-brand-red hover:underline">
             Tous les documents →
           </Link>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { cat: "Communiqués", desc: "Décisions et annonces de la FTF", icon: "📢" },
-            { cat: "Règlements", desc: "Statuts & règlements généraux", icon: "📜" },
-            { cat: "Arbitrage", desc: "Désignations & VAR", icon: "🏁" },
-            { cat: "Appels d'offres", desc: "Marchés & consultations", icon: "📋" },
-          ].map((d) => (
+            { cat: "Communiqués", desc: "Décisions et annonces de la FTF" },
+            { cat: "Règlements", desc: "Statuts & règlements généraux" },
+            { cat: "Arbitrage", desc: "Désignations & VAR" },
+            { cat: "Appels d'offres", desc: "Marchés & consultations" },
+          ].map((d, i) => (
             <Link
               key={d.cat}
               to="/documents"
               className="group rounded-3xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-brand-red hover:shadow-xl"
             >
-              <span className="text-3xl" aria-hidden>
-                {d.icon}
-              </span>
-              <h3 className="mt-2 font-display text-2xl leading-none group-hover:text-brand-red">{d.cat}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{d.desc}</p>
+              <span className="score text-3xl leading-none text-brand-red">0{i + 1}</span>
+              <h3 className="title-card mt-3 group-hover:text-brand-red">{d.cat}</h3>
+              <p className="mt-1.5 text-sm text-muted-foreground">{d.desc}</p>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* National team band */}
-      <section className="bg-brand-deep py-16 text-primary-foreground">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 md:grid-cols-3">
-          {[
-            ["6", "World Cup appearances"],
-            ["2004", "Africa Cup of Nations champions"],
-            ["1957", "Federation founded"],
-          ].map(([n, l]) => (
-            <div key={l} className="border-l-4 border-brand-gold pl-6">
-              <div className="font-display text-7xl text-brand-red">{n}</div>
-              <p className="uppercase tracking-widest text-primary-foreground/70">{l}</p>
-            </div>
-          ))}
-        </div>
-        <div className="mx-auto mt-8 flex max-w-7xl flex-wrap gap-3 px-4">
-          <Link
-            to="/equipe-nationale"
-            className="rounded-full bg-brand-red px-6 py-3 font-display text-xl tracking-wide text-primary-foreground hover:opacity-90"
-          >
-            Suivre les Aigles →
-          </Link>
-          <Link
-            to="/actualites/$id"
-            params={{ id: "squad-can" }}
-            className="rounded-full border border-primary-foreground/30 px-6 py-3 font-display text-xl tracking-wide hover:border-primary-foreground"
-          >
-            Dossier CAN →
-          </Link>
+      {/* ── Bande Équipe Nationale ───────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-brand-ink text-white">
+        <img src={TROPHY_IMG} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-ink via-brand-ink/90 to-brand-ink/60" />
+        <div className="relative mx-auto max-w-7xl px-4 py-16">
+          <p className="eyebrow text-brand-gold">Aigles de Carthage</p>
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
+            {[
+              ["6", "Participations en Coupe du Monde"],
+              ["2004", "Champions d'Afrique"],
+              ["1957", "Fondation de la Fédération"],
+            ].map(([n, l]) => (
+              <div key={l} className="border-l-4 border-brand-red pl-6">
+                <div className="score text-6xl leading-none text-brand-gold">{n}</div>
+                <p className="mt-2 text-sm uppercase tracking-[0.14em] text-white/70">{l}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link
+              to="/equipe-nationale"
+              className="rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:brightness-110"
+            >
+              Suivre les Aigles →
+            </Link>
+            <Link
+              to="/actualites/$id"
+              params={{ id: "squad-can" }}
+              className="rounded-full border border-white/35 px-6 py-3 text-sm font-bold transition hover:border-white hover:bg-white/5"
+            >
+              Dossier CAN →
+            </Link>
+          </div>
         </div>
       </section>
 

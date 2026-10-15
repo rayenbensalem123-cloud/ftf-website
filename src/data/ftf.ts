@@ -61,7 +61,7 @@ export const ARTICLES: Article[] = [
   {
     id: "squad-can",
     category: "Équipe Nationale",
-    title: "The final squad list announced for the Africa Cup of Nations",
+    title: "CAN : la liste finale des 27 Aigles dévoilée",
     excerpt: "Les Aigles de Carthage connaissent leurs 27 joueurs pour la CAN. Analyse complète.",
     image: stadium,
     body: [
@@ -71,9 +71,9 @@ export const ARTICLES: Article[] = [
   },
   {
     id: "esperance-titre",
-    category: "African Champions League",
-    title: "Espérance did it again and won the title in an epic match",
-    excerpt: "Last night the Tunisian side made it clear the trophy is not leaving Tunis.",
+    category: "Ligue des Champions CAF",
+    title: "L'Espérance sacrée à nouveau après une finale épique",
+    excerpt: "Hier soir, le club tunisien a rappelé que le trophée ne quitterait pas Tunis.",
     image: trophy,
     body: [
       "Dans un stade Hammadi Agrebi en fusion, l'Espérance de Tunis a soulevé un nouveau titre continental au terme d'une finale épique.",
@@ -83,7 +83,7 @@ export const ARTICLES: Article[] = [
   {
     id: "derby-preview",
     category: "Ligue 1",
-    title: "Clásico preview: EST vs CA — everything before Sunday's derby",
+    title: "Avant-match : EST — CA, tout ce qu'il faut savoir avant le derby",
     excerpt: "Compos probables, arbitre, parcage et enjeux du derby de Tunis.",
     body: [
       "Dimanche 17h00, Radès accueille le derby de Tunis entre l'Espérance et le Club Africain pour la 6e journée de Ligue 1.",
@@ -92,8 +92,8 @@ export const ARTICLES: Article[] = [
   },
   {
     id: "chaouat-interview",
-    category: "Communities",
-    title: "Will he be back? Full interview with our captain",
+    category: "Interview",
+    title: "« Je reviendrai plus fort » — entretien avec le capitaine",
     excerpt: "Entretien exclusif sur la saison, la CAN et les supporters.",
     body: [
       "« Je reviendrai plus fort » — entretien exclusif avec le capitaine sur sa blessure, sa rééducation et les objectifs du club.",

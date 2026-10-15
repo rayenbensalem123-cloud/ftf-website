@@ -3,6 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { FIXTURES } from "@/data/ftf";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { PageHead } from "@/components/page-head";
 
 export const Route = createFileRoute("/billetterie")({
   component: Billetterie,
@@ -18,8 +19,12 @@ function Billetterie() {
     <div className="min-h-screen font-sans text-foreground">
       <SiteHeader />
       <main className="mx-auto max-w-3xl px-4 py-10">
-        <p className="text-sm font-bold uppercase tracking-widest text-brand-gold">Stade Hammadi Agrebi</p>
-        <h1 className="font-display text-5xl text-white">Billetterie</h1>
+        <PageHead
+          eyebrow="Stade Hammadi Agrebi · Radès"
+          title="Billetterie"
+          lead="Réservez vos places pour les rencontres de la Ligue 1 et des Aigles de Carthage."
+        />
+
         <div className="mt-6 rounded-3xl border border-border bg-card p-6">
           <label className="block text-sm font-bold">
             Match
@@ -29,7 +34,7 @@ function Billetterie() {
                 setMatchId(e.target.value);
                 setDone(false);
               }}
-              className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3"
+              className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 font-medium"
             >
               {FIXTURES.map((f) => (
                 <option key={f.id} value={f.id}>
@@ -39,6 +44,7 @@ function Billetterie() {
             </select>
           </label>
           <p className="mt-2 text-sm text-muted-foreground">{match.venue}</p>
+
           <label className="mt-4 block text-sm font-bold">
             Billets (max 6)
             <input
@@ -50,23 +56,26 @@ function Billetterie() {
                 setQty(Number(e.target.value));
                 setDone(false);
               }}
-              className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3"
+              className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 font-medium"
             />
           </label>
+
           <button
             onClick={() => setDone(true)}
-            className="mt-6 w-full rounded-full bg-brand-red py-3 font-display text-xl tracking-wide text-primary-foreground hover:opacity-90"
+            className="mt-6 w-full rounded-full bg-brand-red py-3 text-sm font-bold text-white transition hover:brightness-110"
           >
             Réserver →
           </button>
+
           {done && (
-            <p className="mt-4 rounded-2xl bg-muted p-4 text-sm font-bold">
-              Réservation enregistrée : {qty} billet(s) — {match.home.short} vs {match.away.short}. Présentez
-              ce code au guichet : FTF-{match.id.toUpperCase()}-{qty}.
+            <p className="mt-4 rounded-2xl bg-brand-paper p-4 text-sm font-bold">
+              Réservation enregistrée : {qty} billet(s) — {match.home.short} vs {match.away.short}.
+              Présentez ce code au guichet : FTF-{match.id.toUpperCase()}-{qty}.
             </p>
           )}
         </div>
-        <Link to="/competition" className="mt-6 inline-block font-bold text-brand-red">
+
+        <Link to="/competition" className="mt-6 inline-block text-sm font-bold text-brand-red hover:underline">
           ← Retour compétition
         </Link>
       </main>

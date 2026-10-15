@@ -3,6 +3,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { ARTICLES } from "@/data/ftf";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { PageHead } from "@/components/page-head";
 
 export const Route = createFileRoute("/actualites/")({
   component: Actualites,
@@ -17,38 +18,65 @@ function Actualites() {
     <div className="min-h-screen font-sans text-foreground">
       <SiteHeader />
       <main className="mx-auto max-w-7xl px-4 py-10">
-        <p className="text-sm font-bold uppercase tracking-widest text-brand-gold">FTF Media</p>
-        <h1 className="font-display text-5xl text-white">Actualités</h1>
-        <div className="mt-4 flex flex-wrap gap-2">
+        <PageHead
+          eyebrow="FTF Média"
+          title="Actualités"
+          lead="Communiqués officiels, sélections et vie des clubs — toute l'actualité du football tunisien."
+        />
+
+        <div className="mt-5 flex flex-wrap gap-2">
           {cats.map((c) => (
             <button
               key={c}
               onClick={() => setCat(c)}
-              className={`shrink-0 rounded-full border px-4 py-1.5 text-xs font-black uppercase tracking-wider transition ${
+              className={`shrink-0 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
                 cat === c
-                  ? "border-brand-red bg-brand-red text-primary-foreground"
-                  : "border-white/30 bg-white/10 text-white backdrop-blur-sm hover:border-white"
+                  ? "border-brand-red bg-brand-red text-white"
+                  : "border-border bg-card text-foreground/70 hover:border-brand-red hover:text-brand-red"
               }`}
             >
               {c}
             </button>
           ))}
         </div>
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
-          {list.map((a) => (
-            <article key={a.id} className="overflow-hidden rounded-3xl border border-border bg-card">
-              {a.image && <img src={a.image} alt="" className="h-48 w-full object-cover" loading="lazy" />}
-              <div className="p-6">
-                <p className="text-sm font-bold uppercase tracking-widest text-brand-red">{a.category}</p>
-                <h2 className="mt-2 font-display text-3xl leading-none">{a.title}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">{a.excerpt}</p>
-                <Link to="/actualites/$id" params={{ id: a.id }} className="mt-3 inline-block font-bold text-brand-red">
-                  Lire l'article →
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+
+        {list.length === 0 ? (
+          <p className="mt-8 text-muted-foreground">Aucun article dans cette catégorie.</p>
+        ) : (
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            {list.map((a) => (
+              <article
+                key={a.id}
+                className="group overflow-hidden rounded-3xl border border-border bg-card transition hover:border-brand-red hover:shadow-xl"
+              >
+                {a.image && (
+                  <img
+                    src={a.image}
+                    alt=""
+                    className="h-48 w-full object-cover transition duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                )}
+                <div className="p-6">
+                  <p className="eyebrow text-brand-red">{a.category}</p>
+                  <h2 className="title-section mt-2">
+                    <Link to="/actualites/$id" params={{ id: a.id }} className="hover:text-brand-red">
+                      {a.title}
+                    </Link>
+                  </h2>
+                  <p className="mt-2 text-sm text-muted-foreground">{a.excerpt}</p>
+                  <Link
+                    to="/actualites/$id"
+                    params={{ id: a.id }}
+                    className="mt-4 inline-block text-sm font-bold text-brand-red hover:underline"
+                  >
+                    Lire l'article →
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </main>
       <SiteFooter />
     </div>

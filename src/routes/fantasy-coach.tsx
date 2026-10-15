@@ -11,28 +11,44 @@ function FantasyCoach() {
   return (
     <div className="min-h-screen font-sans text-foreground">
       <SiteHeader />
-      <main className="mx-auto max-w-4xl px-4 py-10 text-center">
-        <p className="text-sm font-bold uppercase tracking-widest text-brand-gold">Jeu FTF</p>
-        <h1 className="font-display text-6xl text-white">Fantasy Coach</h1>
-        <p className="mx-auto mt-3 max-w-xl text-white/75">
-          Composez votre XI de Ligue 1 avec les 6 clubs partenaires et défiez la communauté chaque journée.
+      <main className="mx-auto max-w-4xl px-4 py-14 text-center">
+        <p className="eyebrow text-brand-red">Jeu officiel FTF</p>
+        <h1 className="title-page mx-auto mt-3 max-w-2xl text-4xl md:text-5xl">Fantasy Coach</h1>
+        <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+          Composez votre XI de Ligue 1, défiez la communauté à chaque journée et suivez vos points en
+          temps réel.
         </p>
-        <div className="mt-6 flex justify-center gap-4">
-          {CLUBS.slice(0, 5).map((c) => (
-            <img key={c.short} src={c.logo} alt={c.name} title={c.name} className="h-14 w-14 object-contain" />
+
+        <div className="mt-8 flex flex-wrap justify-center gap-5 rounded-3xl border border-border bg-card px-6 py-7">
+          {CLUBS.map((c) => (
+            <img
+              key={c.short}
+              src={c.logo}
+              alt={c.name}
+              title={c.name}
+              className="h-14 w-14 object-contain"
+            />
           ))}
         </div>
-        <div className="mt-8 flex justify-center gap-3">
+
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             to="/clubs"
-            className="rounded-full bg-brand-red px-6 py-3 font-display text-xl tracking-wide text-primary-foreground"
+            className="rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:brightness-110"
           >
             Choisir mes joueurs →
           </Link>
-          <Link to="/competition" className="rounded-full border border-border px-6 py-3 font-display text-xl">
+          <Link
+            to="/competition"
+            className="rounded-full border border-border bg-card px-6 py-3 text-sm font-bold transition hover:border-brand-red hover:text-brand-red"
+          >
             Règles du jeu
           </Link>
         </div>
+
+        <p className="mt-6 text-xs text-muted-foreground">
+          Ouverture officielle des inscriptions à la reprise du championnat.
+        </p>
       </main>
       <SiteFooter />
     </div>
