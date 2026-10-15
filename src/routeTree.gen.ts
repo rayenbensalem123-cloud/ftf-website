@@ -10,26 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ActualitesRouteImport } from './routes/actualites'
 import { Route as BilletterieRouteImport } from './routes/billetterie'
 import { Route as ClassementRouteImport } from './routes/classement'
-import { Route as ClubsRouteImport } from './routes/clubs'
 import { Route as CompetitionRouteImport } from './routes/competition'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DocumentsRouteImport } from './routes/documents'
 import { Route as EquipeNationaleRouteImport } from './routes/equipe-nationale'
 import { Route as FantasyCoachRouteImport } from './routes/fantasy-coach'
+import { Route as ActualitesIndexRouteImport } from './routes/actualites/index'
 import { Route as ActualitesIdRouteImport } from './routes/actualites/$id'
+import { Route as ClubsIndexRouteImport } from './routes/clubs/index'
 import { Route as ClubsShortRouteImport } from './routes/clubs/$short'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ActualitesRoute = ActualitesRouteImport.update({
-  id: '/actualites',
-  path: '/actualites',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BilletterieRoute = BilletterieRouteImport.update({
@@ -40,11 +35,6 @@ const BilletterieRoute = BilletterieRouteImport.update({
 const ClassementRoute = ClassementRouteImport.update({
   id: '/classement',
   path: '/classement',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClubsRoute = ClubsRouteImport.update({
-  id: '/clubs',
-  path: '/clubs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompetitionRoute = CompetitionRouteImport.update({
@@ -72,23 +62,31 @@ const FantasyCoachRoute = FantasyCoachRouteImport.update({
   path: '/fantasy-coach',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActualitesIndexRoute = ActualitesIndexRouteImport.update({
+  id: '/actualites/',
+  path: '/actualites/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActualitesIdRoute = ActualitesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ActualitesRoute,
+  id: '/actualites/$id',
+  path: '/actualites/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubsIndexRoute = ClubsIndexRouteImport.update({
+  id: '/clubs/',
+  path: '/clubs/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ClubsShortRoute = ClubsShortRouteImport.update({
-  id: '/$short',
-  path: '/$short',
-  getParentRoute: () => ClubsRoute,
+  id: '/clubs/$short',
+  path: '/clubs/$short',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/actualites': typeof ActualitesRouteWithChildren
   '/billetterie': typeof BilletterieRoute
   '/classement': typeof ClassementRoute
-  '/clubs': typeof ClubsRouteWithChildren
   '/competition': typeof CompetitionRoute
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
@@ -96,13 +94,13 @@ export interface FileRoutesByFullPath {
   '/fantasy-coach': typeof FantasyCoachRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
+  '/actualites/': typeof ActualitesIndexRoute
+  '/clubs/': typeof ClubsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/actualites': typeof ActualitesRouteWithChildren
   '/billetterie': typeof BilletterieRoute
   '/classement': typeof ClassementRoute
-  '/clubs': typeof ClubsRouteWithChildren
   '/competition': typeof CompetitionRoute
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
@@ -110,14 +108,14 @@ export interface FileRoutesByTo {
   '/fantasy-coach': typeof FantasyCoachRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
+  '/actualites': typeof ActualitesIndexRoute
+  '/clubs': typeof ClubsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/actualites': typeof ActualitesRouteWithChildren
   '/billetterie': typeof BilletterieRoute
   '/classement': typeof ClassementRoute
-  '/clubs': typeof ClubsRouteWithChildren
   '/competition': typeof CompetitionRoute
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
@@ -125,15 +123,15 @@ export interface FileRoutesById {
   '/fantasy-coach': typeof FantasyCoachRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
+  '/actualites/': typeof ActualitesIndexRoute
+  '/clubs/': typeof ClubsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/actualites'
     | '/billetterie'
     | '/classement'
-    | '/clubs'
     | '/competition'
     | '/contact'
     | '/documents'
@@ -141,13 +139,13 @@ export interface FileRouteTypes {
     | '/fantasy-coach'
     | '/actualites/$id'
     | '/clubs/$short'
+    | '/actualites/'
+    | '/clubs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/actualites'
     | '/billetterie'
     | '/classement'
-    | '/clubs'
     | '/competition'
     | '/contact'
     | '/documents'
@@ -155,13 +153,13 @@ export interface FileRouteTypes {
     | '/fantasy-coach'
     | '/actualites/$id'
     | '/clubs/$short'
+    | '/actualites'
+    | '/clubs'
   id:
     | '__root__'
     | '/'
-    | '/actualites'
     | '/billetterie'
     | '/classement'
-    | '/clubs'
     | '/competition'
     | '/contact'
     | '/documents'
@@ -169,19 +167,23 @@ export interface FileRouteTypes {
     | '/fantasy-coach'
     | '/actualites/$id'
     | '/clubs/$short'
+    | '/actualites/'
+    | '/clubs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ActualitesRoute: typeof ActualitesRouteWithChildren
   BilletterieRoute: typeof BilletterieRoute
   ClassementRoute: typeof ClassementRoute
-  ClubsRoute: typeof ClubsRouteWithChildren
   CompetitionRoute: typeof CompetitionRoute
   ContactRoute: typeof ContactRoute
   DocumentsRoute: typeof DocumentsRoute
   EquipeNationaleRoute: typeof EquipeNationaleRoute
   FantasyCoachRoute: typeof FantasyCoachRoute
+  ActualitesIdRoute: typeof ActualitesIdRoute
+  ClubsShortRoute: typeof ClubsShortRoute
+  ActualitesIndexRoute: typeof ActualitesIndexRoute
+  ClubsIndexRoute: typeof ClubsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -191,13 +193,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/actualites': {
-      id: '/actualites'
-      path: '/actualites'
-      fullPath: '/actualites'
-      preLoaderRoute: typeof ActualitesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/billetterie': {
@@ -212,13 +207,6 @@ declare module '@tanstack/react-router' {
       path: '/classement'
       fullPath: '/classement'
       preLoaderRoute: typeof ClassementRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clubs': {
-      id: '/clubs'
-      path: '/clubs'
-      fullPath: '/clubs'
-      preLoaderRoute: typeof ClubsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/competition': {
@@ -256,56 +244,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FantasyCoachRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/actualites/': {
+      id: '/actualites/'
+      path: '/actualites'
+      fullPath: '/actualites/'
+      preLoaderRoute: typeof ActualitesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/actualites/$id': {
       id: '/actualites/$id'
-      path: '/$id'
+      path: '/actualites/$id'
       fullPath: '/actualites/$id'
       preLoaderRoute: typeof ActualitesIdRouteImport
-      parentRoute: typeof ActualitesRoute
+      parentRoute: typeof rootRouteImport
+    }
+    '/clubs/': {
+      id: '/clubs/'
+      path: '/clubs'
+      fullPath: '/clubs/'
+      preLoaderRoute: typeof ClubsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/clubs/$short': {
       id: '/clubs/$short'
-      path: '/$short'
+      path: '/clubs/$short'
       fullPath: '/clubs/$short'
       preLoaderRoute: typeof ClubsShortRouteImport
-      parentRoute: typeof ClubsRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface ActualitesRouteChildren {
-  ActualitesIdRoute: typeof ActualitesIdRoute
-}
-
-const ActualitesRouteChildren: ActualitesRouteChildren = {
-  ActualitesIdRoute: ActualitesIdRoute,
-}
-
-const ActualitesRouteWithChildren = ActualitesRoute._addFileChildren(
-  ActualitesRouteChildren,
-)
-
-interface ClubsRouteChildren {
-  ClubsShortRoute: typeof ClubsShortRoute
-}
-
-const ClubsRouteChildren: ClubsRouteChildren = {
-  ClubsShortRoute: ClubsShortRoute,
-}
-
-const ClubsRouteWithChildren = ClubsRoute._addFileChildren(ClubsRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ActualitesRoute: ActualitesRouteWithChildren,
   BilletterieRoute: BilletterieRoute,
   ClassementRoute: ClassementRoute,
-  ClubsRoute: ClubsRouteWithChildren,
   CompetitionRoute: CompetitionRoute,
   ContactRoute: ContactRoute,
   DocumentsRoute: DocumentsRoute,
   EquipeNationaleRoute: EquipeNationaleRoute,
   FantasyCoachRoute: FantasyCoachRoute,
+  ActualitesIdRoute: ActualitesIdRoute,
+  ClubsShortRoute: ClubsShortRoute,
+  ActualitesIndexRoute: ActualitesIndexRoute,
+  ClubsIndexRoute: ClubsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

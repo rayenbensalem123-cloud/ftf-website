@@ -4,7 +4,7 @@ import { ARTICLES } from "@/data/ftf";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
-export const Route = createFileRoute("/actualites")({
+export const Route = createFileRoute("/actualites/")({
   component: Actualites,
 });
 
