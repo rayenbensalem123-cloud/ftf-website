@@ -133,85 +133,86 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Bar 2 — masthead + primary nav */}
-      <div className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
-          <Link
-            to="/"
-            className="flex shrink-0 items-center gap-3"
-            aria-label="FTF · TUNISIE — Fédération Tunisienne de Football"
-          >
-            <img src={FTF_LOGO} alt="" className="h-11 w-11 object-contain" />
-            <span className="leading-none">
-              <span className="block font-display text-xl font-extrabold tracking-tight text-brand-ink">
-                FTF <span className="text-brand-red">·</span> TUNISIE
+      {/* Bar 2 — masthead + nav bar */}
+      <div className="sticky top-0 z-50 bg-card">
+        <div className="border-b border-border">
+          <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
+            <Link
+              to="/"
+              className="flex shrink-0 items-center gap-3"
+              aria-label="FTF · TUNISIE — Fédération Tunisienne de Football"
+            >
+              <img src={FTF_LOGO} alt="" className="h-11 w-11 object-contain" />
+              <span className="leading-none">
+                <span className="block font-display text-xl font-extrabold tracking-tight text-brand-ink">
+                  FTF <span className="text-brand-red">·</span> TUNISIE
+                </span>
+                <span className="mt-1 hidden text-[10.5px] font-semibold uppercase tracking-[0.13em] text-muted-foreground xl:block">
+                  Fédération Tunisienne de Football
+                </span>
               </span>
-              <span className="mt-1 hidden text-[10.5px] font-semibold uppercase tracking-[0.13em] text-muted-foreground xl:block">
-                Fédération Tunisienne de Football
-              </span>
-            </span>
-          </Link>
+            </Link>
 
-          <nav className="ml-auto hidden items-center lg:flex" aria-label="Navigation principale">
-            {DESKTOP_NAV.map((item) => {
-              const active = isActive(item.match);
-              return (
-                <div key={item.label} className="group relative">
-                  <Link
-                    to={item.to}
-                    className="nav-link"
-                    data-active={active || undefined}
-                    aria-haspopup={item.children ? "true" : undefined}
-                  >
-                    {item.label}
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink lg:hidden"
+              aria-expanded={open}
+              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        <div className="hidden border-b border-border bg-card lg:block">
+          <div className="mx-auto flex max-w-7xl items-center px-4">
+            <nav className="flex flex-1 items-center" aria-label="Navigation principale">
+              {DESKTOP_NAV.map((item) => {
+                const active = isActive(item.match);
+                return (
+                  <div key={item.label} className="group relative">
+                    <Link
+                      to={item.to}
+                      className={`relative flex items-center gap-1.5 px-4 py-2.5 text-[13px] font-bold transition ${
+                        active ? "text-brand-red" : "text-brand-ink hover:text-brand-red"
+                      }`}
+                      aria-haspopup={item.children ? "true" : undefined}
+                    >
+                      {item.label}
+                      {item.children && (
+                        <ChevronDown className="h-3.5 w-3.5 transition group-hover:rotate-180" aria-hidden />
+                      )}
+                      {active && (
+                        <span className="absolute inset-x-4 -bottom-px h-0.5 bg-brand-red" />
+                      )}
+                    </Link>
                     {item.children && (
-                      <ChevronDown className="h-3.5 w-3.5 transition group-hover:rotate-180" aria-hidden />
-                    )}
-                  </Link>
-                  {item.children && (
-                    <div className="invisible absolute left-0 top-full z-[60] pt-2 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                      <div className="mega-panel">
-                        {item.children.map((c) => (
-                          <Link key={c.label} to={c.to} className="mega-item">
-                            {c.label}
-                            {c.desc && <small>{c.desc}</small>}
-                          </Link>
-                        ))}
+                      <div className="invisible absolute left-0 top-full z-[60] pt-2 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                        <div className="mega-panel">
+                          {item.children.map((c) => (
+                            <Link key={c.label} to={c.to} className="mega-item">
+                              {c.label}
+                              {c.desc && <small>{c.desc}</small>}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </nav>
-
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink lg:hidden"
-            aria-expanded={open}
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+            <Link
+              to="/billetterie"
+              className="ml-4 inline-flex items-center gap-2 bg-brand-red px-6 py-2.5 text-[13px] font-bold text-white transition hover:brightness-110"
+            >
+              Billetterie
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
         </div>
       </div>
-
-      <Link
-        to="/billetterie"
-        className="hidden lg:block bg-brand-red text-white"
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5">
-          <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em]">
-            <span>Billetterie officielle</span>
-            <span className="h-px w-10 bg-white/40" />
-          </div>
-          <span className="flex items-center gap-1.5 text-xs font-bold">
-            Acheter vos billets
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-          </span>
-        </div>
-      </Link>
 
       {/* Mobile drawer */}
       {open && (
