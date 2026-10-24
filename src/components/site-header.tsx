@@ -42,18 +42,13 @@ const NAV: NavItem[] = [
   { label: "Fantasy Coach", to: "/fantasy-coach", match: ["/fantasy-coach"] },
 ];
 
-const UTILITY = [
-  { to: "/actualites", label: "Presse" },
-  { to: "/documents", label: "Transparence" },
-  { to: "/billetterie", label: "Billetterie" },
-  { to: "/contact", label: "Contact" },
-];
-
 /**
  * Single main bar: the logo links home ("Accueil" lives in the mobile drawer
- * only). Fantasy Coach is held back until xl so the one-row header fits at 1024.
+ * only). The desktop bar shows from md up — 4 links at md, 5 at lg, 6 at xl —
+ * so every breakpoint fits without a scroll or an overflow.
  */
 const DESKTOP_NAV = NAV.filter((item) => item.to !== "/");
+const NAV_MD = [0, 1, 3, 4].map((i) => DESKTOP_NAV[i]!);
 const NAV_LG = DESKTOP_NAV.filter((item) => item.to !== "/fantasy-coach");
 
 function TickerItems() {
@@ -130,10 +125,10 @@ export function SiteHeader() {
 
   return (
     <header>
-      {/* Bar 1 — live scores + utility */}
-      <div className="bg-brand-ink text-white">
-        <div className="mx-auto flex h-10 max-w-7xl items-center gap-6 px-4">
-          <div className="hidden min-w-0 flex-1 overflow-hidden lg:block">
+      {/* Bar 1 — live scores ticker */}
+      <div className="relative z-40 bg-brand-ink text-white">
+        <div className="mx-auto flex h-9 max-w-7xl items-center gap-6 px-4 md:h-10">
+          <div className="w-full min-w-0 overflow-hidden md:flex-1">
             <div className="flex w-max animate-[ticker_45s_linear_infinite] whitespace-nowrap text-[11px]">
               <div className="flex">
                 <TickerItems />
@@ -143,25 +138,6 @@ export function SiteHeader() {
               </div>
             </div>
           </div>
-
-          <nav className="ml-auto flex items-center gap-4" aria-label="Liens utiles">
-            {UTILITY.map((u) => (
-              <Link key={u.label} to={u.to} className="utility-link">
-                {u.label}
-              </Link>
-            ))}
-            <span className="flex items-center gap-1.5 border-l border-white/20 pl-4 text-[11px] font-bold">
-              <span className="text-white">FR</span>
-              <span
-                className="cursor-not-allowed text-white/60"
-                title="Version arabe bientôt disponible"
-                aria-disabled="true"
-                lang="ar"
-              >
-                AR
-              </span>
-            </span>
-          </nav>
         </div>
       </div>
 
@@ -178,20 +154,25 @@ export function SiteHeader() {
               <span className="block font-display text-lg font-extrabold tracking-tight text-brand-ink">
                 FTF <span className="text-brand-red">·</span> TUNISIE
               </span>
-              <span className="mt-1 hidden text-[10px] font-semibold uppercase tracking-[0.13em] text-muted-foreground xl:block">
+              <span className="mt-1 hidden text-[10px] font-semibold uppercase tracking-[0.13em] text-muted-foreground min-[880px]:block">
                 Fédération Tunisienne de Football
               </span>
             </span>
           </Link>
 
-          <nav className="hidden flex-1 items-stretch lg:flex" aria-label="Navigation principale">
-            <div className="hidden items-stretch xl:flex">
+          <nav className="hidden flex-1 items-stretch md:flex" aria-label="Navigation principale">
+            <div className="hidden flex items-stretch xl:flex">
               {DESKTOP_NAV.map((item) => (
                 <NavDrop key={item.label} item={item} active={isActive(item.match)} />
               ))}
             </div>
-            <div className="flex items-stretch xl:hidden">
+            <div className="hidden flex items-stretch lg:flex xl:hidden">
               {NAV_LG.map((item) => (
+                <NavDrop key={item.label} item={item} active={isActive(item.match)} />
+              ))}
+            </div>
+            <div className="flex items-stretch lg:hidden">
+              {NAV_MD.map((item) => (
                 <NavDrop key={item.label} item={item} active={isActive(item.match)} />
               ))}
             </div>
@@ -200,7 +181,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-3">
             <Link
               to="/billetterie"
-              className="hidden h-10 items-center gap-2 rounded-lg bg-brand-red px-4 text-[11.5px] font-bold uppercase tracking-[0.08em] text-white transition hover:brightness-110 lg:inline-flex"
+              className="hidden h-10 items-center gap-2 rounded-lg bg-brand-red px-4 text-[11.5px] font-bold uppercase tracking-[0.08em] text-white transition hover:brightness-110 md:inline-flex"
             >
               Billetterie
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -209,7 +190,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink md:hidden"
               aria-expanded={open}
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             >

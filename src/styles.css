@@ -240,19 +240,6 @@
     transform: scaleX(1);
   }
 
-  .utility-link {
-    font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: color-mix(in oklab, white 72%, transparent);
-    transition: color 0.15s ease;
-  }
-
-  .utility-link:hover {
-    color: #fff;
-  }
-
   .mega-panel {
     min-width: 17rem;
     padding: 0.4rem;
