@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { FIXTURES, FTF_LOGO, RESULTS } from "@/data/ftf";
 
 type NavChild = { to: string; label: string; desc?: string };
@@ -185,13 +185,6 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <Link
-            to="/billetterie"
-            className="ml-auto hidden rounded-full bg-brand-red px-5 py-2.5 text-[13px] font-bold text-white transition hover:brightness-110 lg:ml-4 lg:inline-flex"
-          >
-            Billetterie
-          </Link>
-
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -203,6 +196,22 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+
+      <Link
+        to="/billetterie"
+        className="hidden lg:block bg-brand-red text-white"
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5">
+          <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em]">
+            <span>Billetterie officielle</span>
+            <span className="h-px w-10 bg-white/40" />
+          </div>
+          <span className="flex items-center gap-1.5 text-xs font-bold">
+            Acheter vos billets
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+          </span>
+        </div>
+      </Link>
 
       {/* Mobile drawer */}
       {open && (
