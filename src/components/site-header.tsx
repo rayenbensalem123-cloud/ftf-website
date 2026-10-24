@@ -121,8 +121,9 @@ export function SiteHeader() {
             <span className="flex items-center gap-1.5 border-l border-white/20 pl-4 text-[11px] font-bold">
               <span className="text-white">FR</span>
               <span
-                className="cursor-not-allowed text-white/35"
+                className="cursor-not-allowed text-white/60"
                 title="Version arabe bientôt disponible"
+                aria-disabled="true"
                 lang="ar"
               >
                 AR
@@ -135,7 +136,11 @@ export function SiteHeader() {
       {/* Bar 2 — masthead + primary nav */}
       <div className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
-          <Link to="/" className="flex shrink-0 items-center gap-3" aria-label="FTF — Accueil">
+          <Link
+            to="/"
+            className="flex shrink-0 items-center gap-3"
+            aria-label="FTF · TUNISIE — Fédération Tunisienne de Football"
+          >
             <img src={FTF_LOGO} alt="" className="h-11 w-11 object-contain" />
             <span className="leading-none">
               <span className="block font-display text-xl font-extrabold tracking-tight text-brand-ink">

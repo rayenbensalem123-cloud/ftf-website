@@ -37,6 +37,7 @@ function Index() {
   return (
     <div className="min-h-screen font-sans text-foreground">
       <SiteHeader />
+      <main>
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative isolate overflow-hidden bg-brand-ink text-white">
@@ -150,45 +151,38 @@ function Index() {
           </Link>
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[1.55fr_1fr]">
+        <div className="mt-6 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
           <article className="group relative min-h-[22rem] overflow-hidden rounded-3xl">
             <img
-              src={STADIUM_IMG}
+              src={TROPHY_IMG}
               alt={featured.title}
               className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/40 to-transparent" />
-            <div className="relative flex h-full min-h-[22rem] flex-col justify-end p-6 md:p-8">
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-ink via-brand-ink/55 to-brand-ink/20" />
+            <div className="relative flex h-full min-h-[22rem] flex-col justify-end p-6 md:p-10">
               <span className="eyebrow w-fit rounded-full bg-brand-red px-3 py-1 text-white">
                 {featured.category}
               </span>
-              <h3 className="title-section mt-3 max-w-xl text-white md:text-3xl">
+              <h3 className="title-page mt-4 max-w-2xl text-white">
                 <Link to="/actualites/$id" params={{ id: featured.id }} className="hover:underline">
                   {featured.title}
                 </Link>
               </h3>
-              <p className="mt-2.5 max-w-lg text-sm text-white/75">{featured.excerpt}</p>
+              <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white/75">{featured.excerpt}</p>
+              <div className="mt-5 flex items-center gap-3 text-xs text-white/60">
+                <span>À la une</span>
+                <span className="h-px flex-1 bg-white/20" />
+                <span>FTF</span>
+              </div>
             </div>
           </article>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="flex flex-col divide-y divide-border">
             {rest.slice(0, 3).map((a, i) => (
-              <article
-                key={a.id}
-                className="flex gap-4 border-b border-border pb-5 last:border-0 last:pb-0"
-              >
-                {i === 0 ? (
-                  <img
-                    src={TROPHY_IMG}
-                    alt=""
-                    loading="lazy"
-                    className="h-20 w-28 shrink-0 rounded-2xl object-cover"
-                  />
-                ) : (
-                  <span className="score grid h-20 w-16 shrink-0 place-items-center rounded-2xl bg-brand-paper text-3xl text-brand-red">
-                    {i + 1}
-                  </span>
-                )}
+              <article key={a.id} className="group flex gap-5 py-5 first:pt-0 last:pb-0">
+                <span className="score flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-brand-paper text-2xl text-brand-red">
+                  {i + 1}
+                </span>
                 <div className="min-w-0">
                   <p className="eyebrow text-brand-red">{a.category}</p>
                   <h3 className="title-card mt-1.5">
@@ -331,7 +325,7 @@ function Index() {
             Tous les documents →
           </Link>
         </div>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid divide-y divide-border border-y border-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4">
           {[
             { cat: "Communiqués", desc: "Décisions et annonces de la FTF" },
             { cat: "Règlements", desc: "Statuts & règlements généraux" },
@@ -341,11 +335,16 @@ function Index() {
             <Link
               key={d.cat}
               to="/documents"
-              className="group rounded-3xl border border-border bg-card p-5 transition hover:-translate-y-1 hover:border-brand-red hover:shadow-xl"
+              className="group flex flex-col gap-2 px-0 py-5 transition sm:px-6 sm:py-6 lg:px-5"
             >
-              <span className="score text-3xl leading-none text-brand-red">0{i + 1}</span>
-              <h3 className="title-card mt-3 group-hover:text-brand-red">{d.cat}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">{d.desc}</p>
+              <div className="flex items-center justify-between">
+                <span className="score text-3xl leading-none text-brand-red">0{i + 1}</span>
+                <span className="text-xs font-bold text-muted-foreground transition group-hover:text-brand-red">
+                  Consulter →
+                </span>
+              </div>
+              <h3 className="title-card mt-1 group-hover:text-brand-red">{d.cat}</h3>
+              <p className="text-sm text-muted-foreground">{d.desc}</p>
             </Link>
           ))}
         </div>
@@ -387,6 +386,7 @@ function Index() {
         </div>
       </section>
 
+      </main>
       <SiteFooter />
     </div>
   );
