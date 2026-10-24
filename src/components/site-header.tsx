@@ -50,38 +50,70 @@ const UTILITY = [
 ];
 
 /**
- * Desktop nav drops "Accueil" — the masthead logo already links home, and this
- * keeps the single-row header from overflowing at the lg breakpoint.
- * The mobile drawer still shows the full NAV (where the logo is less discoverable).
+ * Single main bar: the logo links home ("Accueil" lives in the mobile drawer
+ * only). Fantasy Coach is held back until xl so the one-row header fits at 1024.
  */
 const DESKTOP_NAV = NAV.filter((item) => item.to !== "/");
+const NAV_LG = DESKTOP_NAV.filter((item) => item.to !== "/fantasy-coach");
 
 function TickerItems() {
   return (
     <>
+      {RESULTS.map((r) => (
+        <span key={r.id} className="mx-4 inline-flex items-center gap-1.5 align-middle">
+          <img src={r.home.logo} alt="" className="h-3.5 w-3.5 object-contain" />
+          <span className="font-semibold">{r.home.short}</span>
+          <span className="score rounded-sm bg-white/10 px-1.5 text-[12px] leading-[1.35] text-brand-gold">
+            {r.hs}–{r.as}
+          </span>
+          <span className="font-semibold">{r.away.short}</span>
+          <img src={r.away.logo} alt="" className="h-3.5 w-3.5 object-contain" />
+          <span className="text-white/40">Terminé</span>
+        </span>
+      ))}
       {FIXTURES.map((f) => (
-        <span key={f.id} className="mx-5 inline-flex items-center gap-1.5">
+        <span key={f.id} className="mx-4 inline-flex items-center gap-1.5 align-middle">
           <img src={f.home.logo} alt="" className="h-3.5 w-3.5 object-contain" />
           <span className="font-semibold">{f.home.short}</span>
           <span className="text-white/45">vs</span>
           <span className="font-semibold">{f.away.short}</span>
           <img src={f.away.logo} alt="" className="h-3.5 w-3.5 object-contain" />
-          <span className="text-white/45">
+          <span className="text-brand-gold/90">
             {f.date} · {f.time}
           </span>
         </span>
       ))}
-      {RESULTS.map((r) => (
-        <span key={r.id} className="mx-5 inline-flex items-center gap-1.5">
-          <span className="font-semibold">{r.home.short}</span>
-          <span className="score text-[13px] text-brand-gold">
-            {r.hs}–{r.as}
-          </span>
-          <span className="font-semibold">{r.away.short}</span>
-          <span className="text-white/45">Terminé</span>
-        </span>
-      ))}
     </>
+  );
+}
+
+function NavDrop({ item, active }: { item: NavItem; active: boolean }) {
+  return (
+    <div className="group/nav relative flex h-full items-center">
+      <Link
+        to={item.to}
+        className="nav-item"
+        data-active={active || undefined}
+        aria-haspopup={item.children ? "true" : undefined}
+      >
+        {item.label}
+        {item.children && (
+          <ChevronDown className="h-3 w-3 transition group-hover/nav:rotate-180" aria-hidden />
+        )}
+      </Link>
+      {item.children && (
+        <div className="invisible absolute left-0 top-full z-[60] opacity-0 transition duration-150 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+          <div className="mega-panel">
+            {item.children.map((c) => (
+              <Link key={c.label} to={c.to} className="mega-item">
+                {c.label}
+                {c.desc && <small>{c.desc}</small>}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -98,9 +130,9 @@ export function SiteHeader() {
 
   return (
     <header>
-      {/* Bar 1 — utility + live scores */}
+      {/* Bar 1 — live scores + utility */}
       <div className="bg-brand-ink text-white">
-        <div className="mx-auto flex h-9 max-w-7xl items-center gap-6 px-4">
+        <div className="mx-auto flex h-10 max-w-7xl items-center gap-6 px-4">
           <div className="hidden min-w-0 flex-1 overflow-hidden lg:block">
             <div className="flex w-max animate-[ticker_45s_linear_infinite] whitespace-nowrap text-[11px]">
               <div className="flex">
@@ -133,83 +165,56 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Bar 2 — masthead + nav bar */}
-      <div className="sticky top-0 z-50 bg-card">
-        <div className="border-b border-border">
-          <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
-            <Link
-              to="/"
-              className="flex shrink-0 items-center gap-3"
-              aria-label="FTF · TUNISIE — Fédération Tunisienne de Football"
-            >
-              <img src={FTF_LOGO} alt="" className="h-11 w-11 object-contain" />
-              <span className="leading-none">
-                <span className="block font-display text-xl font-extrabold tracking-tight text-brand-ink">
-                  FTF <span className="text-brand-red">·</span> TUNISIE
-                </span>
-                <span className="mt-1 hidden text-[10.5px] font-semibold uppercase tracking-[0.13em] text-muted-foreground xl:block">
-                  Fédération Tunisienne de Football
-                </span>
+      {/* Bar 2 — main bar: logo + menu + billetterie */}
+      <div className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
+        <div className="mx-auto flex h-[68px] max-w-7xl items-stretch gap-8 px-4">
+          <Link
+            to="/"
+            className="flex shrink-0 items-center gap-3"
+            aria-label="FTF · TUNISIE — Fédération Tunisienne de Football"
+          >
+            <img src={FTF_LOGO} alt="" className="h-10 w-10 object-contain" />
+            <span className="leading-none">
+              <span className="block font-display text-lg font-extrabold tracking-tight text-brand-ink">
+                FTF <span className="text-brand-red">·</span> TUNISIE
               </span>
+              <span className="mt-1 hidden text-[10px] font-semibold uppercase tracking-[0.13em] text-muted-foreground xl:block">
+                Fédération Tunisienne de Football
+              </span>
+            </span>
+          </Link>
+
+          <nav className="hidden flex-1 items-stretch lg:flex" aria-label="Navigation principale">
+            <div className="hidden items-stretch xl:flex">
+              {DESKTOP_NAV.map((item) => (
+                <NavDrop key={item.label} item={item} active={isActive(item.match)} />
+              ))}
+            </div>
+            <div className="flex items-stretch xl:hidden">
+              {NAV_LG.map((item) => (
+                <NavDrop key={item.label} item={item} active={isActive(item.match)} />
+              ))}
+            </div>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <Link
+              to="/billetterie"
+              className="hidden h-10 items-center gap-2 rounded-lg bg-brand-red px-4 text-[11.5px] font-bold uppercase tracking-[0.08em] text-white transition hover:brightness-110 lg:inline-flex"
+            >
+              Billetterie
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
 
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink lg:hidden"
               aria-expanded={open}
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
-          </div>
-        </div>
-
-        <div className="hidden border-b border-border bg-card md:block">
-          <div className="mx-auto flex max-w-7xl items-center px-2 sm:px-4">
-            <nav className="flex flex-1 items-center overflow-x-auto" aria-label="Navigation principale">
-              {DESKTOP_NAV.map((item) => {
-                const active = isActive(item.match);
-                return (
-                  <div key={item.label} className="group relative">
-                    <Link
-                      to={item.to}
-                      className={`relative flex items-center gap-1.5 px-2 py-2 text-[12.5px] font-bold transition sm:px-3 md:px-4 ${
-                        active ? "text-brand-red" : "text-brand-ink hover:text-brand-red"
-                      }`}
-                      aria-haspopup={item.children ? "true" : undefined}
-                    >
-                      {item.label}
-                      {item.children && (
-                        <ChevronDown className="h-3.5 w-3.5 transition group-hover:rotate-180" aria-hidden />
-                      )}
-                      {active && (
-                        <span className="absolute inset-x-3 -bottom-px h-0.5 bg-brand-red sm:inset-x-4" />
-                      )}
-                    </Link>
-                    {item.children && (
-                      <div className="invisible absolute left-0 top-full z-[60] pt-2 opacity-0 transition duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                        <div className="mega-panel">
-                          {item.children.map((c) => (
-                            <Link key={c.label} to={c.to} className="mega-item">
-                              {c.label}
-                              {c.desc && <small>{c.desc}</small>}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </nav>
-            <Link
-              to="/billetterie"
-              className="ml-2 inline-flex items-center gap-2 bg-brand-red px-4 py-2 text-[12.5px] font-bold text-white transition hover:brightness-110 sm:px-5 sm:py-2.5 sm:text-[13px]"
-            >
-              Billetterie
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
           </div>
         </div>
       </div>
