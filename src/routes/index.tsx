@@ -1,4 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import {
   ARTICLES,
   CLUBS,
@@ -57,18 +58,20 @@ function Index() {
             Compétitions nationales, Aigles de Carthage et actualités officielles — de Radès à Bizerte,
             toute la vie du football tunisien réunie en un seul endroit.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-6">
             <Link
               to="/competition"
-              className="rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:brightness-110"
+              className="group inline-flex items-center gap-2 border-b-2 border-brand-red pb-1 text-sm font-bold text-white transition hover:gap-3"
             >
               Compétitions &amp; résultats
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
             <Link
               to="/billetterie"
-              className="rounded-full border border-white/35 px-6 py-3 text-sm font-bold text-white transition hover:border-white hover:bg-white/5"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition hover:text-white hover:gap-3"
             >
               Billetterie
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>
         </div>
@@ -222,18 +225,20 @@ function Index() {
           <div className="text-center md:text-left">
             <p className="eyebrow text-brand-gold">Centre du match</p>
             <h2 className="title-section mt-1.5 text-white">Le derby de Tunis décide du titre</h2>
-            <div className="mt-4 flex flex-wrap justify-center gap-3 md:justify-start">
+            <div className="mt-5 flex flex-wrap justify-center gap-6 md:justify-start">
               <Link
                 to="/billetterie"
-                className="rounded-full bg-brand-red px-5 py-2.5 text-sm font-bold text-white transition hover:brightness-110"
+                className="group inline-flex items-center gap-2 border-b-2 border-brand-gold pb-1 text-sm font-bold text-white transition hover:gap-3"
               >
-                Billetterie →
+                Billetterie
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
               <Link
                 to="/competition"
-                className="rounded-full border border-white/35 px-5 py-2.5 text-sm font-bold transition hover:border-white hover:bg-white/5"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition hover:text-white hover:gap-3"
               >
-                Centre du match →
+                Centre du match
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
           </div>
@@ -368,19 +373,21 @@ function Index() {
               </div>
             ))}
           </div>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-6">
             <Link
               to="/equipe-nationale"
-              className="rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:brightness-110"
+              className="group inline-flex items-center gap-2 border-b-2 border-brand-red pb-1 text-sm font-bold text-white transition hover:gap-3"
             >
-              Suivre les Aigles →
+              Suivre les Aigles
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
             <Link
               to="/actualites/$id"
               params={{ id: "squad-can" }}
-              className="rounded-full border border-white/35 px-6 py-3 text-sm font-bold transition hover:border-white hover:bg-white/5"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition hover:text-white hover:gap-3"
             >
-              Dossier CAN →
+              Dossier CAN
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>
         </div>
