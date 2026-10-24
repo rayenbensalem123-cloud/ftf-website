@@ -156,7 +156,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink lg:hidden"
+              className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink md:hidden"
               aria-expanded={open}
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             >
@@ -165,16 +165,16 @@ export function SiteHeader() {
           </div>
         </div>
 
-        <div className="hidden border-b border-border bg-card lg:block">
-          <div className="mx-auto flex max-w-7xl items-center px-4">
-            <nav className="flex flex-1 items-center" aria-label="Navigation principale">
+        <div className="hidden border-b border-border bg-card md:block">
+          <div className="mx-auto flex max-w-7xl items-center px-2 sm:px-4">
+            <nav className="flex flex-1 items-center overflow-x-auto" aria-label="Navigation principale">
               {DESKTOP_NAV.map((item) => {
                 const active = isActive(item.match);
                 return (
                   <div key={item.label} className="group relative">
                     <Link
                       to={item.to}
-                      className={`relative flex items-center gap-1.5 px-4 py-2.5 text-[13px] font-bold transition ${
+                      className={`relative flex items-center gap-1.5 px-2 py-2 text-[12.5px] font-bold transition sm:px-3 md:px-4 ${
                         active ? "text-brand-red" : "text-brand-ink hover:text-brand-red"
                       }`}
                       aria-haspopup={item.children ? "true" : undefined}
@@ -184,7 +184,7 @@ export function SiteHeader() {
                         <ChevronDown className="h-3.5 w-3.5 transition group-hover:rotate-180" aria-hidden />
                       )}
                       {active && (
-                        <span className="absolute inset-x-4 -bottom-px h-0.5 bg-brand-red" />
+                        <span className="absolute inset-x-3 -bottom-px h-0.5 bg-brand-red sm:inset-x-4" />
                       )}
                     </Link>
                     {item.children && (
@@ -205,7 +205,7 @@ export function SiteHeader() {
             </nav>
             <Link
               to="/billetterie"
-              className="ml-4 inline-flex items-center gap-2 bg-brand-red px-6 py-2.5 text-[13px] font-bold text-white transition hover:brightness-110"
+              className="ml-2 inline-flex items-center gap-2 bg-brand-red px-4 py-2 text-[12.5px] font-bold text-white transition hover:brightness-110 sm:px-5 sm:py-2.5 sm:text-[13px]"
             >
               Billetterie
               <ArrowRight className="h-4 w-4" aria-hidden />
