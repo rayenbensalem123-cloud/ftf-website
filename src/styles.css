@@ -203,9 +203,9 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    padding: 0.55rem 0.6rem;
-    font-size: 0.8125rem;
+    gap: 0.2rem;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.78125rem;
     font-weight: 700;
     white-space: nowrap;
     color: color-mix(in oklab, var(--foreground) 76%, transparent);
@@ -223,11 +223,24 @@
   .nav-link[data-active="true"]::after {
     content: "";
     position: absolute;
-    left: 0.6rem;
-    right: 0.6rem;
+    left: 0.5rem;
+    right: 0.5rem;
     bottom: 0.15rem;
     height: 2px;
     background: var(--brand-red);
+  }
+
+  @media (min-width: 1280px) {
+    .nav-link {
+      gap: 0.25rem;
+      padding: 0.55rem 0.6rem;
+      font-size: 0.8125rem;
+    }
+
+    .nav-link[data-active="true"]::after {
+      left: 0.6rem;
+      right: 0.6rem;
+    }
   }
 
   .utility-link {

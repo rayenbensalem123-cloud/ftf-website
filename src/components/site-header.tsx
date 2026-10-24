@@ -49,6 +49,13 @@ const UTILITY = [
   { to: "/contact", label: "Contact" },
 ];
 
+/**
+ * Desktop nav drops "Accueil" — the masthead logo already links home, and this
+ * keeps the single-row header from overflowing at the lg breakpoint.
+ * The mobile drawer still shows the full NAV (where the logo is less discoverable).
+ */
+const DESKTOP_NAV = NAV.filter((item) => item.to !== "/");
+
 function TickerItems() {
   return (
     <>
@@ -134,14 +141,14 @@ export function SiteHeader() {
               <span className="block font-display text-xl font-extrabold tracking-tight text-brand-ink">
                 FTF <span className="text-brand-red">·</span> TUNISIE
               </span>
-              <span className="mt-1 hidden text-[10.5px] font-semibold uppercase tracking-[0.13em] text-muted-foreground sm:block">
+              <span className="mt-1 hidden text-[10.5px] font-semibold uppercase tracking-[0.13em] text-muted-foreground xl:block">
                 Fédération Tunisienne de Football
               </span>
             </span>
           </Link>
 
-          <nav className="ml-auto hidden items-center xl:flex" aria-label="Navigation principale">
-            {NAV.map((item) => {
+          <nav className="ml-auto hidden items-center lg:flex" aria-label="Navigation principale">
+            {DESKTOP_NAV.map((item) => {
               const active = isActive(item.match);
               return (
                 <div key={item.label} className="group relative">
@@ -175,7 +182,7 @@ export function SiteHeader() {
 
           <Link
             to="/billetterie"
-            className="ml-auto hidden rounded-full bg-brand-red px-5 py-2.5 text-[13px] font-bold text-white transition hover:brightness-110 xl:ml-4 xl:inline-flex"
+            className="ml-auto hidden rounded-full bg-brand-red px-5 py-2.5 text-[13px] font-bold text-white transition hover:brightness-110 lg:ml-4 lg:inline-flex"
           >
             Billetterie
           </Link>
@@ -183,7 +190,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink xl:hidden"
+            className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink lg:hidden"
             aria-expanded={open}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
           >
@@ -194,7 +201,7 @@ export function SiteHeader() {
 
       {/* Mobile drawer */}
       {open && (
-        <div className="border-b border-border bg-card shadow-xl xl:hidden">
+        <div className="border-b border-border bg-card shadow-xl lg:hidden">
           <nav className="mx-auto max-w-7xl px-4 py-3" aria-label="Navigation mobile">
             {NAV.map((item) => (
               <div key={item.label} className="border-b border-border/70 last:border-0">
