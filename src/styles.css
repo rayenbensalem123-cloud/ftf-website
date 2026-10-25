@@ -78,7 +78,9 @@
   --font-display-stack: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-sans-stack: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-condensed-stack: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
-  --gradient-hero: radial-gradient(circle at 75% 30%, oklch(0.58 0.24 27 / 0.55), transparent 55%), linear-gradient(160deg, oklch(0.16 0.02 20), oklch(0.1 0.01 20));
+  --gradient-hero:
+    radial-gradient(circle at 75% 30%, oklch(0.58 0.24 27 / 0.55), transparent 55%),
+    linear-gradient(160deg, oklch(0.16 0.02 20), oklch(0.1 0.01 20));
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
@@ -288,5 +290,3 @@
     }
   }
 }
-
-

@@ -35,10 +35,6 @@ function Contact() {
             <h2 className="title-section mt-1.5">Siège de la FTF</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Cité Olympique, Radès · Tunis
-              <br />
-              contact@ftf.org.tn
-              <br />
-              +216 71 000 000
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground" lang="ar" dir="rtl">
               الجامعة التونسية لكرة القدم — المدينة الأولمبية برادس

@@ -241,34 +241,26 @@ export const ARTICLES: Article[] = [
     ],
   },
   {
-    id: "esperance-titre",
-    category: "Ligue des Champions CAF",
-    title: "L'Espérance sacrée à nouveau après une finale épique",
-    excerpt: "Hier soir, le club tunisien a rappelé que le trophée ne quitterait pas Tunis.",
+    id: "can-2027-libye",
+    category: "Équipe Nationale",
+    title: "Éliminatoires CAN 2027 : la Tunisie reçoit la Libye à Sfax le 13 novembre",
+    excerpt: "Double confrontation face à la Libye en novembre, d'abord à Sfax puis en Libye.",
+    image: stadium,
+    body: [
+      "Les Aigles de Carthage disputent en novembre la double confrontation face à la Libye, comptant pour le groupe H des éliminatoires de la CAN 2027.",
+      "Le match aller est programmé le vendredi 13 novembre à 17h00 au stade Taïeb Mhiri de Sfax. Le retour aura lieu en Libye le mardi 17 novembre.",
+      "Les rencontres de mars 2027 face à l'Ouganda et au Botswana seront précisées dès confirmation du calendrier par la CAF.",
+    ],
+  },
+  {
+    id: "u23-gabon",
+    category: "Sélections de jeunes",
+    title: "U23 : le Gabon sur la route des Espoirs en novembre",
+    excerpt: "Deuxième tour des éliminatoires de la CAN U23 2027, matchs aller et retour.",
     image: trophy,
     body: [
-      "Dans un stade Hammadi Agrebi en fusion, l'Espérance de Tunis a soulevé un nouveau titre continental au terme d'une finale épique.",
-      "Retour sur les moments clés du match, les buteurs et les réactions dans notre dossier complet.",
-    ],
-  },
-  {
-    id: "derby-preview",
-    category: "Ligue 1",
-    title: "Avant-match : EST — CA, tout ce qu'il faut savoir avant le derby",
-    excerpt: "Compos probables, arbitre, parcage et enjeux du derby de Tunis.",
-    body: [
-      "Dimanche 17h00, Radès accueille le derby de Tunis entre l'Espérance et le Club Africain pour la 6e journée de Ligue 1.",
-      "Guichets fermés annoncés. Ouverture des portes trois heures avant le coup d'envoi, carte d'identité obligatoire.",
-    ],
-  },
-  {
-    id: "chaouat-interview",
-    category: "Interview",
-    title: "« Je reviendrai plus fort » — entretien avec le capitaine",
-    excerpt: "Entretien exclusif sur la saison, la CAN et les supporters.",
-    body: [
-      "« Je reviendrai plus fort » — entretien exclusif avec le capitaine sur sa blessure, sa rééducation et les objectifs du club.",
-      "L'intégralité de l'interview est disponible sur FTF TV et nos plateformes.",
+      "La sélection tunisienne des moins de 23 ans affronte le Gabon au deuxième tour des éliminatoires de la CAN U23 2027.",
+      "Le match aller se joue au Gabon le lundi 9 novembre, le retour le mardi 17 novembre. Les horaires et les stades seront annoncés par la Fédération.",
     ],
   },
 ];
@@ -315,12 +307,6 @@ export const DOCS: Doc[] = [
     id: "comm-arbitres",
     cat: "Communiqué",
     title: "Systèmes de communication pour les arbitres Élite",
-    date: "12 oct 2026",
-  },
-  {
-    id: "des-j6",
-    cat: "Arbitrage",
-    title: "Désignations arbitrales — Journée 6",
     date: "12 oct 2026",
   },
   {

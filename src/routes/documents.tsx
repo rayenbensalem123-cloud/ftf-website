@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { DOCS } from "@/data/ftf";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,6 +11,9 @@ export const Route = createFileRoute("/documents")({
 });
 
 function Documents() {
+  const cats = ["Tout", ...Array.from(new Set(DOCS.map((d) => d.cat)))];
+  const [cat, setCat] = useState("Tout");
+  const list = cat === "Tout" ? DOCS : DOCS.filter((d) => d.cat === cat);
   return (
     <div className="min-h-screen font-sans text-foreground">
       <SiteHeader />
@@ -20,8 +24,24 @@ function Documents() {
           lead="Communiqués, règlements, arbitrage et appels d'offres — publiés conformément aux standards des fédérations."
         />
 
+        <div className="mt-5 flex flex-wrap gap-2">
+          {cats.map((c) => (
+            <button
+              key={c}
+              onClick={() => setCat(c)}
+              className={`shrink-0 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+                cat === c
+                  ? "border-brand-red bg-brand-red text-white"
+                  : "border-border bg-card text-foreground/70 hover:border-brand-red hover:text-brand-red"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
         <div className="mt-6 divide-y divide-border overflow-hidden rounded-3xl border border-border bg-card">
-          {DOCS.map((d) => (
+          {list.map((d) => (
             <div
               key={d.id}
               className="flex flex-wrap items-center justify-between gap-3 p-5 transition hover:bg-brand-paper"
