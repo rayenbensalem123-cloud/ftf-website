@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
-import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
-import { FIXTURES, FTF_LOGO, RESULTS } from "@/data/ftf";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { ArrowRight, ChevronDown, Menu, Search, X } from "lucide-react";
+import { ARTICLES, DOCS, FTF_LOGO, NATIONAL_TEAMS, articleById } from "@/data/ftf";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 type NavChild = { to: string; label: string; desc?: string };
 type NavItem = { label: string; to: string; match: string[]; children?: NavChild[] };
@@ -9,85 +17,48 @@ type NavItem = { label: string; to: string; match: string[]; children?: NavChild
 const NAV: NavItem[] = [
   { label: "Accueil", to: "/", match: ["/"] },
   {
-    label: "Compétitions",
-    to: "/competition",
-    match: ["/competition", "/classement"],
-    children: [
-      { to: "/competition", label: "Ligue 1 Professionnelle", desc: "Calendrier & résultats" },
-      { to: "/classement", label: "Classement", desc: "Saison 2026 · Journée 6" },
-      { to: "/competition", label: "Coupe de Tunisie", desc: "Tableau & tirages" },
-    ],
-  },
-  { label: "Clubs", to: "/clubs", match: ["/clubs"] },
-  {
-    label: "Équipes Nationales",
+    label: "Équipes nationales",
     to: "/equipe-nationale",
     match: ["/equipe-nationale"],
-    children: [
-      { to: "/equipe-nationale", label: "Équipe Nationale A", desc: "Les Aigles de Carthage" },
-      { to: "/equipe-nationale", label: "U23 · U20 · U17", desc: "Sélections de jeunes" },
-      { to: "/equipe-nationale", label: "Féminine & Futsal", desc: "Sélections nationales" },
-    ],
+    children: NATIONAL_TEAMS.map((t) => ({
+      to: "/equipe-nationale",
+      label: t.name,
+      desc: t.detail,
+    })),
   },
+  { label: "Calendrier & résultats", to: "/competition", match: ["/competition", "/classement"] },
   { label: "Actualités", to: "/actualites", match: ["/actualites"] },
-  {
-    label: "Fédération",
-    to: "/documents",
-    match: ["/documents", "/contact"],
-    children: [
-      { to: "/documents", label: "Documents officiels", desc: "Communiqués, règlements, appels d'offres" },
-      { to: "/contact", label: "Contact", desc: "Coordonnées & plan du site" },
-    ],
-  },
   { label: "Fantasy Coach", to: "/fantasy-coach", match: ["/fantasy-coach"] },
 ];
 
-/**
- * Single main bar: the logo links home ("Accueil" lives in the mobile drawer
- * only). The desktop bar shows from md up — 4 links at md, 5 at lg, 6 at xl —
- * so every breakpoint fits without a scroll or an overflow.
- */
 const DESKTOP_NAV = NAV.filter((item) => item.to !== "/");
-const NAV_MD = [0, 1, 3, 4].map((i) => DESKTOP_NAV[i]!);
-const NAV_LG = DESKTOP_NAV.filter((item) => item.to !== "/fantasy-coach");
 
-function TickerItems() {
-  return (
-    <>
-      {RESULTS.map((r) => (
-        <span key={r.id} className="mx-4 inline-flex items-center gap-1.5 align-middle">
-          <img src={r.home.logo} alt="" className="h-3.5 w-3.5 object-contain" />
-          <span className="font-semibold">{r.home.short}</span>
-          <span className="score rounded-sm bg-white/10 px-1.5 text-[12px] leading-[1.35] text-brand-gold">
-            {r.hs}–{r.as}
-          </span>
-          <span className="font-semibold">{r.away.short}</span>
-          <img src={r.away.logo} alt="" className="h-3.5 w-3.5 object-contain" />
-          <span className="text-white/40">Terminé</span>
-        </span>
-      ))}
-      {FIXTURES.map((f) => (
-        <span key={f.id} className="mx-4 inline-flex items-center gap-1.5 align-middle">
-          <img src={f.home.logo} alt="" className="h-3.5 w-3.5 object-contain" />
-          <span className="font-semibold">{f.home.short}</span>
-          <span className="text-white/45">vs</span>
-          <span className="font-semibold">{f.away.short}</span>
-          <img src={f.away.logo} alt="" className="h-3.5 w-3.5 object-contain" />
-          <span className="text-brand-gold/90">
-            {f.date} · {f.time}
-          </span>
-        </span>
-      ))}
-    </>
-  );
-}
+/** Top strip links — the federation's own pages (formerly under "Fédération"). */
+const STRIP_LINKS = [
+  { to: "/documents", label: "Documents officiels" },
+  { to: "/contact", label: "Contact" },
+];
+
+const SEARCH_PAGES = [
+  { to: "/equipe-nationale", label: "Équipes nationales" },
+  { to: "/competition", label: "Calendrier & résultats" },
+  { to: "/classement", label: "Classement" },
+  { to: "/actualites", label: "Actualités" },
+  { to: "/documents", label: "Documents officiels" },
+  { to: "/billetterie", label: "Billetterie" },
+  { to: "/fantasy-coach", label: "Fantasy Coach" },
+  { to: "/contact", label: "Contact" },
+];
+
+const FEATURED = articleById("squad-can") ?? ARTICLES[0];
 
 function NavDrop({ item, active }: { item: NavItem; active: boolean }) {
+  const wide = (item.children?.length ?? 0) > 3;
   return (
     <div className="group/nav relative flex h-full items-center">
       <Link
         to={item.to}
-        className="nav-item"
+        className="nav-item h-full"
         data-active={active || undefined}
         aria-haspopup={item.children ? "true" : undefined}
       >
@@ -98,7 +69,9 @@ function NavDrop({ item, active }: { item: NavItem; active: boolean }) {
       </Link>
       {item.children && (
         <div className="invisible absolute left-0 top-full z-[60] opacity-0 transition duration-150 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-          <div className="mega-panel">
+          <div
+            className={wide ? "mega-panel grid min-w-[34rem] grid-cols-2 gap-x-2" : "mega-panel"}
+          >
             {item.children.map((c) => (
               <Link key={c.label} to={c.to} className="mega-item">
                 {c.label}
@@ -112,89 +85,161 @@ function NavDrop({ item, active }: { item: NavItem; active: boolean }) {
   );
 }
 
+function SearchDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
+  const navigate = useNavigate();
+  const go = (to: string) => {
+    onOpenChange(false);
+    void navigate({ to });
+  };
+
+  return (
+    <CommandDialog open={open} onOpenChange={onOpenChange}>
+      <CommandInput placeholder="Rechercher une actualité, un document, une page…" />
+      <CommandList>
+        <CommandEmpty>Aucun résultat.</CommandEmpty>
+        <CommandGroup heading="Actualités">
+          {ARTICLES.map((a) => (
+            <CommandItem
+              key={a.id}
+              value={`${a.title} ${a.category}`}
+              onSelect={() => {
+                onOpenChange(false);
+                void navigate({ to: "/actualites/$id", params: { id: a.id } });
+              }}
+            >
+              {a.title}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+        <CommandGroup heading="Documents officiels">
+          {DOCS.map((d) => (
+            <CommandItem key={d.id} value={`${d.title} ${d.cat}`} onSelect={() => go("/documents")}>
+              <span className="min-w-0 flex-1 truncate">{d.title}</span>
+              <span className="ml-3 shrink-0 text-xs text-muted-foreground">{d.cat}</span>
+            </CommandItem>
+          ))}
+        </CommandGroup>
+        <CommandGroup heading="Pages">
+          {SEARCH_PAGES.map((p) => (
+            <CommandItem key={p.label} value={p.label} onSelect={() => go(p.to)}>
+              {p.label}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </CommandList>
+    </CommandDialog>
+  );
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const isActive = (match: string[]) =>
-    match.some((m) => (m === "/" ? pathname === "/" : pathname === m || pathname.startsWith(`${m}/`)));
+    match.some((m) =>
+      m === "/" ? pathname === "/" : pathname === m || pathname.startsWith(`${m}/`),
+    );
 
   return (
     <header>
-      {/* Bar 1 — live scores ticker */}
-      <div className="relative z-40 bg-brand-ink text-white">
-        <div className="mx-auto flex h-9 max-w-7xl items-center gap-6 px-4 md:h-10">
-          <div className="w-full min-w-0 overflow-hidden md:flex-1">
-            <div className="flex w-max animate-[ticker_45s_linear_infinite] whitespace-nowrap text-[11px]">
-              <div className="flex">
-                <TickerItems />
-              </div>
-              <div className="flex" aria-hidden>
-                <TickerItems />
-              </div>
-            </div>
+      {/* Strip — featured story + federation pages + search */}
+      <div className="relative z-40 bg-brand-deep text-white">
+        <div className="mx-auto flex h-11 max-w-7xl items-center justify-between gap-4 px-4 text-[13px]">
+          {FEATURED && (
+            <Link
+              to="/actualites/$id"
+              params={{ id: FEATURED.id }}
+              className="flex min-w-0 items-center gap-3 transition hover:text-brand-gold"
+            >
+              <span className="eyebrow shrink-0 text-brand-gold">À la une</span>
+              <span className="truncate">{FEATURED.title}</span>
+              <ArrowRight className="hidden h-3.5 w-3.5 shrink-0 sm:block" aria-hidden />
+            </Link>
+          )}
+          <div className="flex shrink-0 items-center gap-1">
+            {STRIP_LINKS.map((l) => (
+              <Link
+                key={l.label}
+                to={l.to}
+                className="hidden px-3 py-2 font-medium text-white/85 transition hover:text-white md:block"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              className="inline-flex h-11 w-11 items-center justify-center text-white/90 transition hover:text-white"
+              aria-label="Rechercher : actualités, documents, pages"
+            >
+              <Search className="h-5 w-5" aria-hidden />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Bar 2 — main bar: logo + menu + billetterie */}
+      {/* Main bar — logo + navigation + billetterie */}
       <div className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto flex h-[68px] max-w-7xl items-stretch gap-8 px-4">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-stretch gap-8 px-4 lg:h-[88px]">
           <Link
             to="/"
-            className="flex shrink-0 items-center gap-3"
-            aria-label="FTF · TUNISIE — Fédération Tunisienne de Football"
+            className="flex shrink-0 items-center gap-3.5"
+            aria-label="Fédération Tunisienne de Football — accueil"
           >
-            <img src={FTF_LOGO} alt="" className="h-10 w-10 object-contain" />
-            <span className="leading-none">
-              <span className="block font-display text-lg font-extrabold tracking-tight text-brand-ink">
-                FTF <span className="text-brand-red">·</span> TUNISIE
-              </span>
-              <span className="mt-1 hidden text-[10px] font-semibold uppercase tracking-[0.13em] text-muted-foreground min-[880px]:block">
-                Fédération Tunisienne de Football
-              </span>
+            <img src={FTF_LOGO} alt="" className="h-12 w-12 object-contain lg:h-14 lg:w-14" />
+            <span className="font-display text-[13px] font-extrabold uppercase leading-[1.15] tracking-[0.04em] text-brand-ink lg:text-[15px]">
+              <span className="block">Fédération Tunisienne</span>
+              <span className="block">de Football</span>
             </span>
           </Link>
 
-          <nav className="hidden flex-1 items-stretch md:flex" aria-label="Navigation principale">
-            <div className="hidden flex items-stretch xl:flex">
-              {DESKTOP_NAV.map((item) => (
-                <NavDrop key={item.label} item={item} active={isActive(item.match)} />
-              ))}
-            </div>
-            <div className="hidden flex items-stretch lg:flex xl:hidden">
-              {NAV_LG.map((item) => (
-                <NavDrop key={item.label} item={item} active={isActive(item.match)} />
-              ))}
-            </div>
-            <div className="flex items-stretch lg:hidden">
-              {NAV_MD.map((item) => (
-                <NavDrop key={item.label} item={item} active={isActive(item.match)} />
-              ))}
-            </div>
+          <nav
+            className="hidden flex-1 items-stretch gap-1 lg:flex"
+            aria-label="Navigation principale"
+          >
+            {DESKTOP_NAV.map((item) => (
+              <NavDrop key={item.label} item={item} active={isActive(item.match)} />
+            ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="ml-auto flex items-center gap-3 lg:ml-0">
             <Link
               to="/billetterie"
-              className="hidden h-10 items-center gap-2 rounded-lg bg-brand-red px-4 text-[11.5px] font-bold uppercase tracking-[0.08em] text-white transition hover:brightness-110 md:inline-flex"
+              className="hidden h-11 items-center gap-2 rounded-full bg-brand-red px-6 text-[15px] font-semibold text-white transition hover:brightness-110 sm:inline-flex"
             >
               Billetterie
-              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
 
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-brand-ink md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-brand-ink lg:hidden"
               aria-expanded={open}
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -208,16 +253,26 @@ export function SiteHeader() {
               <div key={item.label} className="border-b border-border/70 last:border-0">
                 {item.children ? (
                   <details className="group/d">
-                    <summary className="flex cursor-pointer list-none items-center justify-between py-3 text-sm font-bold text-brand-ink">
+                    <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between font-display text-xl font-extrabold text-brand-ink">
                       {item.label}
-                      <ChevronDown className="h-4 w-4 transition group-open/d:rotate-180" aria-hidden />
+                      <ChevronDown
+                        className="h-4 w-4 transition group-open/d:rotate-180"
+                        aria-hidden
+                      />
                     </summary>
-                    <div className="pb-2 pl-3">
-                      <Link to={item.to} className="block py-2 text-sm font-semibold text-brand-red">
+                    <div className="pb-2 pl-1">
+                      <Link
+                        to={item.to}
+                        className="block py-2.5 text-sm font-semibold text-brand-red"
+                      >
                         {item.label} — vue d'ensemble
                       </Link>
                       {item.children.map((c) => (
-                        <Link key={c.label} to={c.to} className="block py-2 text-sm text-foreground/80">
+                        <Link
+                          key={c.label}
+                          to={c.to}
+                          className="block py-2.5 text-[15px] text-foreground/80"
+                        >
                           {c.label}
                         </Link>
                       ))}
@@ -226,7 +281,7 @@ export function SiteHeader() {
                 ) : (
                   <Link
                     to={item.to}
-                    className="block py-3 text-sm font-bold text-brand-ink"
+                    className="flex min-h-14 items-center font-display text-xl font-extrabold text-brand-ink data-[active=true]:text-brand-red"
                     data-active={isActive(item.match) || undefined}
                   >
                     {item.label}
@@ -234,15 +289,24 @@ export function SiteHeader() {
                 )}
               </div>
             ))}
+            <div className="flex gap-5 py-3 text-sm font-medium text-muted-foreground">
+              {STRIP_LINKS.map((l) => (
+                <Link key={l.label} to={l.to}>
+                  {l.label}
+                </Link>
+              ))}
+            </div>
             <Link
               to="/billetterie"
-              className="mt-4 block rounded-full bg-brand-red py-3 text-center text-sm font-bold text-white"
+              className="mt-1 flex h-14 items-center justify-center rounded-full bg-brand-red text-base font-semibold text-white"
             >
               Billetterie
             </Link>
           </nav>
         </div>
       )}
+
+      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 }

@@ -2,15 +2,14 @@ import { Link } from "@tanstack/react-router";
 import { FTF_LOGO, SPONSOR_TIERS } from "@/data/ftf";
 
 const COMPETITIONS = [
-  { to: "/competition", label: "Ligue 1 Pro" },
-  { to: "/competition", label: "Coupe de Tunisie" },
-  { to: "/classement", label: "Classement" },
+  { to: "/equipe-nationale", label: "Équipe Nationale A" },
+  { to: "/equipe-nationale", label: "Sélections de jeunes" },
+  { to: "/equipe-nationale", label: "Féminine & Futsal" },
+  { to: "/competition", label: "Calendrier & résultats" },
   { to: "/fantasy-coach", label: "Fantasy Coach" },
 ];
 
 const FEDERATION = [
-  { to: "/equipe-nationale", label: "Équipe Nationale" },
-  { to: "/clubs", label: "Clubs" },
   { to: "/actualites", label: "Actualités" },
   { to: "/documents", label: "Documents officiels" },
   { to: "/contact", label: "Contact" },
@@ -48,13 +47,13 @@ export function SiteFooter() {
               الجامعة التونسية لكرة القدم
             </p>
             <p className="mt-4 max-w-xs text-sm leading-relaxed">
-              Cité Olympique, Radès · Tunis. La maison du football tunisien depuis 1957 — clubs,
-              compétitions et Aigles de Carthage.
+              Cité Olympique, Radès · Tunis. La maison du football tunisien depuis 1957 — la
+              Fédération et les équipes nationales, des Aigles de Carthage aux jeunes sélections.
             </p>
           </div>
 
-          <nav aria-label="Compétitions">
-            <p className="eyebrow text-brand-gold">Compétitions</p>
+          <nav aria-label="Équipes nationales">
+            <p className="eyebrow text-brand-gold">Équipes nationales</p>
             <ul className="mt-4 space-y-2.5 text-sm font-medium">
               {COMPETITIONS.map((l) => (
                 <li key={l.label}>
@@ -82,7 +81,7 @@ export function SiteFooter() {
           <div>
             <p className="eyebrow text-brand-gold">Billetterie</p>
             <p className="mt-4 text-sm leading-relaxed">
-              Derby EST — CA · Dimanche 17:00 · Stade Hammadi Agrebi. Guichets fermés annoncés.
+              Billets pour les matchs des Aigles de Carthage et des équipes nationales.
             </p>
             <Link
               to="/billetterie"
