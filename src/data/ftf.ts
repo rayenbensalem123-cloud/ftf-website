@@ -47,11 +47,96 @@ export type NationalResult = {
 };
 
 /**
- * National-team schedule. Add the Aigles' real fixtures and results here and the
- * Calendrier and Billetterie pages pick them up — nothing else to change.
+ * National-team schedule (équipe nationale A, men). Add fixtures and results here and the
+ * Calendrier and Billetterie pages pick them up — nothing else to change. Set
+ * `ticketsOpen: true` on a fixture to make it bookable on the Billetterie page.
  */
-export const NATIONAL_FIXTURES: NationalFixture[] = [];
-export const NATIONAL_RESULTS: NationalResult[] = [];
+export const NATIONAL_FIXTURES: NationalFixture[] = [
+  {
+    id: "tun-lby-2026-11-13",
+    team: "Tunisie",
+    opponent: "Libye",
+    competition: "Éliminatoires CAN 2027 · Groupe H",
+    date: "Ven 13 nov 2026",
+    time: "17:00",
+    venue: "Radès (stade à confirmer)",
+    ticketsOpen: false,
+  },
+  {
+    id: "lby-tun-2026-11-17",
+    team: "Libye",
+    opponent: "Tunisie",
+    competition: "Éliminatoires CAN 2027 · Groupe H",
+    date: "Mar 17 nov 2026",
+    time: "17:00",
+    venue: "En Libye (stade à confirmer)",
+    ticketsOpen: false,
+  },
+  {
+    id: "uga-tun-2027-03",
+    team: "Ouganda",
+    opponent: "Tunisie",
+    competition: "Éliminatoires CAN 2027 · Groupe H",
+    date: "Mars 2027",
+    time: "Date à confirmer",
+    venue: "En Ouganda",
+    ticketsOpen: false,
+  },
+  {
+    id: "bwa-tun-2027-03",
+    team: "Botswana",
+    opponent: "Tunisie",
+    competition: "Éliminatoires CAN 2027 · Groupe H",
+    date: "Mars 2027",
+    time: "Date à confirmer",
+    venue: "Au Botswana",
+    ticketsOpen: false,
+  },
+];
+
+/** Scores are written Tunisie first. Add newest results at the top. */
+export const NATIONAL_RESULTS: NationalResult[] = [
+  {
+    id: "tun-bwa-2026-09-28",
+    team: "Tunisie",
+    opponent: "Botswana",
+    competition: "Éliminatoires CAN 2027 · Groupe H",
+    date: "28 sept 2026",
+    score: "2–2",
+  },
+  {
+    id: "tun-uga-2026-09-24",
+    team: "Tunisie",
+    opponent: "Ouganda",
+    competition: "Éliminatoires CAN 2027 · Groupe H",
+    date: "24 sept 2026",
+    score: "1–1",
+  },
+  {
+    id: "tun-ned-2026-06-25",
+    team: "Tunisie",
+    opponent: "Pays-Bas",
+    competition: "Coupe du Monde 2026 · Groupe F",
+    date: "25 juin 2026",
+    score: "1–3",
+  },
+  {
+    id: "tun-jpn-2026-06-21",
+    team: "Tunisie",
+    opponent: "Japon",
+    competition: "Coupe du Monde 2026 · Groupe F",
+    date: "21 juin 2026",
+    score: "0–4",
+  },
+  {
+    id: "tun-swe-2026-06-15",
+    team: "Tunisie",
+    opponent: "Suède",
+    competition: "Coupe du Monde 2026 · Groupe F",
+    date: "15 juin 2026",
+    score: "1–5",
+  },
+];
 
 export type Article = {
   id: string;

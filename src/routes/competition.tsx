@@ -32,7 +32,7 @@ function Calendrier() {
         <PageHead
           eyebrow="Équipes nationales"
           title="Calendrier & résultats"
-          lead="Les prochains matchs et les derniers résultats des Aigles de Carthage et des sélections nationales."
+          lead="Les prochains matchs et les derniers résultats des Aigles de Carthage. Les autres sélections seront ajoutées dès la publication de leurs programmes."
         />
 
         <Tabs defaultValue="fixtures" className="mt-6">
