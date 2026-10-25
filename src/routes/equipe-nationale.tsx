@@ -29,8 +29,8 @@ function EquipeNationale() {
             Équipes Nationales
           </h1>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/70">
-            Objectif CAN — un groupe, un pays, une ambition. Suivez les sélections tunisiennes, des A
-            aux jeunes catégories.
+            Objectif CAN — un groupe, un pays, une ambition. Suivez les sélections tunisiennes, des
+            A aux jeunes catégories.
           </p>
         </div>
       </section>
@@ -38,7 +38,7 @@ function EquipeNationale() {
       <main className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["6", "Participations Coupe du Monde"],
+            ["7", "Participations Coupe du Monde"],
             ["2004", "Champions d'Afrique"],
             ["27", "Joueurs convoqués"],
           ].map(([n, l]) => (

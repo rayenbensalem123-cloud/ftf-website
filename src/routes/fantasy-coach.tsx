@@ -16,8 +16,8 @@ function FantasyCoach() {
         <p className="eyebrow text-brand-red">Jeu officiel FTF</p>
         <h1 className="title-page mx-auto mt-3 max-w-2xl text-4xl md:text-5xl">Fantasy Coach</h1>
         <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          Composez votre XI de Ligue 1, défiez la communauté à chaque journée et suivez vos points en
-          temps réel.
+          Composez votre XI de Ligue 1, défiez la communauté à chaque journée et suivez vos points
+          en temps réel.
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-5 rounded-3xl border border-border bg-card px-6 py-7">
@@ -34,7 +34,7 @@ function FantasyCoach() {
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
-            to="/clubs"
+            to="/equipe-nationale"
             className="rounded-full bg-brand-red px-6 py-3 text-sm font-bold text-white transition hover:brightness-110"
           >
             Choisir mes joueurs →

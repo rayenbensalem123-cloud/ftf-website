@@ -22,7 +22,7 @@ function Actualites() {
         <PageHead
           eyebrow="FTF Média"
           title="Actualités"
-          lead="Communiqués officiels, sélections et vie des clubs — toute l'actualité du football tunisien."
+          lead="Communiqués officiels, sélections nationales et vie de la Fédération."
         />
 
         <div className="mt-5 flex flex-wrap gap-2">
@@ -61,7 +61,11 @@ function Actualites() {
                 <div className="p-6">
                   <p className="eyebrow text-brand-red">{a.category}</p>
                   <h2 className="title-section mt-2">
-                    <Link to="/actualites/$id" params={{ id: a.id }} className="hover:text-brand-red">
+                    <Link
+                      to="/actualites/$id"
+                      params={{ id: a.id }}
+                      className="hover:text-brand-red"
+                    >
                       {a.title}
                     </Link>
                   </h2>

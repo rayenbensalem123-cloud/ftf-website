@@ -78,13 +78,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "FTF — Fédération Tunisienne de Football" },
-      { name: "description", content: "Site officiel du football tunisien : Aigles de Carthage, clubs de Ligue 1, résultats et actualités." },
+      {
+        name: "description",
+        content:
+          "Site officiel du football tunisien : Aigles de Carthage, équipes nationales, actualités et documents officiels.",
+      },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "FTF — Fédération Tunisienne de Football" },
-      { property: "og:description", content: "Site officiel du football tunisien : Aigles de Carthage, clubs de Ligue 1, résultats et actualités." },
+      {
+        property: "og:description",
+        content:
+          "Site officiel du football tunisien : Aigles de Carthage, équipes nationales, actualités et documents officiels.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      
     ],
     links: [
       {

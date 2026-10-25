@@ -26,7 +26,7 @@ const NAV: NavItem[] = [
       desc: t.detail,
     })),
   },
-  { label: "Calendrier & résultats", to: "/competition", match: ["/competition", "/classement"] },
+  { label: "Calendrier & résultats", to: "/competition", match: ["/competition"] },
   { label: "Actualités", to: "/actualites", match: ["/actualites"] },
   { label: "Fantasy Coach", to: "/fantasy-coach", match: ["/fantasy-coach"] },
 ];
@@ -42,7 +42,6 @@ const STRIP_LINKS = [
 const SEARCH_PAGES = [
   { to: "/equipe-nationale", label: "Équipes nationales" },
   { to: "/competition", label: "Calendrier & résultats" },
-  { to: "/classement", label: "Classement" },
   { to: "/actualites", label: "Actualités" },
   { to: "/documents", label: "Documents officiels" },
   { to: "/billetterie", label: "Billetterie" },

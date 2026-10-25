@@ -21,7 +21,10 @@ function Article() {
         <SiteHeader />
         <main className="mx-auto max-w-3xl px-4 py-20 text-center">
           <h1 className="title-page">Article introuvable</h1>
-          <Link to="/actualites" className="mt-6 inline-block font-bold text-brand-red hover:underline">
+          <Link
+            to="/actualites"
+            className="mt-6 inline-block font-bold text-brand-red hover:underline"
+          >
             ← Toutes les actualités
           </Link>
         </main>
@@ -83,7 +86,11 @@ function Article() {
                 <div key={a.id} className="border-b border-border pb-5 last:border-0 last:pb-0">
                   <p className="eyebrow text-brand-red">{a.category}</p>
                   <h2 className="title-card mt-1.5">
-                    <Link to="/actualites/$id" params={{ id: a.id }} className="hover:text-brand-red">
+                    <Link
+                      to="/actualites/$id"
+                      params={{ id: a.id }}
+                      className="hover:text-brand-red"
+                    >
                       {a.title}
                     </Link>
                   </h2>

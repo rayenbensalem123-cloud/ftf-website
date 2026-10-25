@@ -10,10 +10,8 @@ export const Route = createFileRoute("/contact")({
 
 const PLAN = [
   { to: "/", label: "Accueil" },
-  { to: "/competition", label: "Compétition" },
-  { to: "/classement", label: "Classement" },
-  { to: "/clubs", label: "Clubs" },
-  { to: "/equipe-nationale", label: "Équipe Nationale" },
+  { to: "/equipe-nationale", label: "Équipes nationales" },
+  { to: "/competition", label: "Calendrier & résultats" },
   { to: "/actualites", label: "Actualités" },
   { to: "/fantasy-coach", label: "Fantasy Coach" },
   { to: "/documents", label: "Documents" },

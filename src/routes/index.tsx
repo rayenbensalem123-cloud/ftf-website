@@ -264,7 +264,7 @@ function Index() {
             <p className="eyebrow text-brand-gold">Aigles de Carthage</p>
             <div className="mt-8 grid gap-8 md:grid-cols-3">
               {[
-                ["6", "Participations en Coupe du Monde"],
+                ["7", "Participations en Coupe du Monde"],
                 ["2004", "Champions d'Afrique"],
                 ["1957", "Fondation de la Fédération"],
               ].map(([n, l]) => (

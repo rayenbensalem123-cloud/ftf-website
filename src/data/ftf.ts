@@ -26,27 +26,32 @@ export const CLUBS: Club[] = [
 export const clubByShort = (short: string): Club | undefined =>
   CLUBS.find((c) => c.short.toLowerCase() === short.toLowerCase());
 
-export type Fixture = { id: string; home: Club; away: Club; date: string; time: string; venue: string };
-
-const c = (short: string): Club => {
-  const found = clubByShort(short);
-  if (!found) throw new Error(`Unknown club: ${short}`);
-  return found;
+export type NationalFixture = {
+  id: string;
+  team: string;
+  opponent: string;
+  competition: string;
+  date: string;
+  time: string;
+  venue: string;
+  ticketsOpen: boolean;
 };
 
-export const FIXTURES: Fixture[] = [
-  { id: "est-ca-j6", home: c("EST"), away: c("CA"), date: "Dim 18 oct", time: "17:00", venue: "Stade Hammadi Agrebi, Radès" },
-  { id: "ess-usm-j6", home: c("ESS"), away: c("USM"), date: "Sam 17 oct", time: "15:30", venue: "Stade Olympique de Sousse" },
-  { id: "cab-st-j6", home: c("CAB"), away: c("ST"), date: "Sam 17 oct", time: "14:00", venue: "Stade 15 Octobre, Bizerte" },
-];
+export type NationalResult = {
+  id: string;
+  team: string;
+  opponent: string;
+  competition: string;
+  date: string;
+  score: string;
+};
 
-export type Result = { id: string; home: Club; away: Club; hs: number; as: number };
-
-export const RESULTS: Result[] = [
-  { id: "est-ess-j5", home: c("EST"), away: c("ESS"), hs: 3, as: 1 },
-  { id: "usm-ca-j5", home: c("USM"), away: c("CA"), hs: 0, as: 2 },
-  { id: "st-cab-j5", home: c("ST"), away: c("CAB"), hs: 0, as: 0 },
-];
+/**
+ * National-team schedule. Add the Aigles' real fixtures and results here and the
+ * Calendrier and Billetterie pages pick them up — nothing else to change.
+ */
+export const NATIONAL_FIXTURES: NationalFixture[] = [];
+export const NATIONAL_RESULTS: NationalResult[] = [];
 
 export type Article = {
   id: string;
@@ -102,17 +107,7 @@ export const ARTICLES: Article[] = [
   },
 ];
 
-export const articleById = (id: string): Article | undefined =>
-  ARTICLES.find((a) => a.id === id);
-
-export const STANDINGS = [
-  { club: c("EST"), played: 6, pts: 16 },
-  { club: c("ESS"), played: 6, pts: 13 },
-  { club: c("CA"), played: 6, pts: 12 },
-  { club: c("USM"), played: 6, pts: 10 },
-  { club: c("CAB"), played: 6, pts: 8 },
-  { club: c("ST"), played: 6, pts: 6 },
-];
+export const articleById = (id: string): Article | undefined => ARTICLES.find((a) => a.id === id);
 
 export const SPONSORS = ["Ooredoo", "Tunisair", "Délice", "Kappa", "Biat", "Orange"];
 
@@ -138,17 +133,58 @@ export const NATIONAL_TEAMS: NationalTeam[] = [
 export type Doc = { id: string; cat: string; title: string; date: string };
 
 export const DOCS: Doc[] = [
-  { id: "ao-var", cat: "Appel d'offres", title: "Fourniture de la technologie VAR — AO 010/2026", date: "24 août 2026" },
-  { id: "ao-info", cat: "Appel d'offres", title: "Acquisition de matériel informatique — AO 008/2026", date: "27 août 2026" },
-  { id: "comm-arbitres", cat: "Communiqué", title: "Systèmes de communication pour les arbitres Élite", date: "12 oct 2026" },
-  { id: "des-j6", cat: "Arbitrage", title: "Désignations arbitrales — Journée 6", date: "12 oct 2026" },
-  { id: "statuts", cat: "Règlements", title: "Statuts & règlements généraux — Saison 2026/27", date: "1 juil 2026" },
-  { id: "dtn-u15", cat: "DTN", title: "Journées de détection U15/U17 — programme national", date: "5 oct 2026" },
+  {
+    id: "ao-var",
+    cat: "Appel d'offres",
+    title: "Fourniture de la technologie VAR — AO 010/2026",
+    date: "24 août 2026",
+  },
+  {
+    id: "ao-info",
+    cat: "Appel d'offres",
+    title: "Acquisition de matériel informatique — AO 008/2026",
+    date: "27 août 2026",
+  },
+  {
+    id: "comm-arbitres",
+    cat: "Communiqué",
+    title: "Systèmes de communication pour les arbitres Élite",
+    date: "12 oct 2026",
+  },
+  {
+    id: "des-j6",
+    cat: "Arbitrage",
+    title: "Désignations arbitrales — Journée 6",
+    date: "12 oct 2026",
+  },
+  {
+    id: "statuts",
+    cat: "Règlements",
+    title: "Statuts & règlements généraux — Saison 2026/27",
+    date: "1 juil 2026",
+  },
+  {
+    id: "dtn-u15",
+    cat: "DTN",
+    title: "Journées de détection U15/U17 — programme national",
+    date: "5 oct 2026",
+  },
 ];
 
 export const REGIONS: Record<string, string> = {
-  EST: "Tunis", CA: "Tunis", ST: "Tunis", ASM: "Tunis", CSHL: "Tunis", JSO: "Tunis",
-  ESS: "Sahel", USM: "Sahel", ESHS: "Sahel",
-  CAB: "Nord", OB: "Nord",
-  USBG: "Sud", ESZ: "Sud", ESM: "Sud", ASG: "Sud",
+  EST: "Tunis",
+  CA: "Tunis",
+  ST: "Tunis",
+  ASM: "Tunis",
+  CSHL: "Tunis",
+  JSO: "Tunis",
+  ESS: "Sahel",
+  USM: "Sahel",
+  ESHS: "Sahel",
+  CAB: "Nord",
+  OB: "Nord",
+  USBG: "Sud",
+  ESZ: "Sud",
+  ESM: "Sud",
+  ASG: "Sud",
 };
