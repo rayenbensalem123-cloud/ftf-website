@@ -238,6 +238,19 @@
     transform: scaleX(1);
   }
 
+  /* Compact nav between ~900 and 1280 — keeps the full menu on mid screens */
+  @media (min-width: 900px) and (max-width: 1279.9px) {
+    .nav-item {
+      padding: 0 0.55rem;
+      font-size: 0.8125rem;
+    }
+
+    .nav-item::after {
+      left: 0.55rem;
+      right: 0.55rem;
+    }
+  }
+
   .mega-panel {
     min-width: 17rem;
     padding: 0.4rem;

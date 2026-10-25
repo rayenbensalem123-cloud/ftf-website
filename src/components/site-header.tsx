@@ -201,13 +201,13 @@ export function SiteHeader() {
 
       {/* Main bar — logo + navigation + billetterie */}
       <div className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur">
-        <div className="mx-auto flex h-[72px] max-w-7xl items-stretch gap-8 px-4 lg:h-[88px]">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-stretch gap-4 px-4 lg:h-[88px] lg:gap-8">
           <Link
             to="/"
             className="flex shrink-0 items-center gap-3.5"
             aria-label="Fédération Tunisienne de Football — accueil"
           >
-            <img src={FTF_LOGO} alt="" className="h-12 w-12 object-contain lg:h-14 lg:w-14" />
+            <img src={FTF_LOGO} alt="" className="h-10 w-10 object-contain lg:h-14 lg:w-14" />
             <span className="font-display text-[13px] font-extrabold uppercase leading-[1.15] tracking-[0.04em] text-brand-ink lg:text-[15px]">
               <span className="block">Fédération Tunisienne</span>
               {' '}
@@ -216,7 +216,7 @@ export function SiteHeader() {
           </Link>
 
           <nav
-            className="hidden flex-1 items-stretch gap-1 lg:flex"
+            className="hidden flex-1 items-stretch gap-1 min-[900px]:flex"
             aria-label="Navigation principale"
           >
             {DESKTOP_NAV.map((item) => (
@@ -224,10 +224,10 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          <div className="ml-auto flex items-center gap-3 lg:ml-0">
+          <div className="ml-auto flex items-center gap-3 min-[900px]:ml-0">
             <Link
               to="/billetterie"
-              className="hidden h-11 items-center gap-2 rounded-full bg-brand-red px-6 text-[15px] font-semibold text-white transition hover:brightness-110 sm:inline-flex"
+              className="hidden h-11 items-center gap-2 rounded-full bg-brand-red px-4 text-[13px] font-semibold text-white transition hover:brightness-110 sm:inline-flex lg:px-6 lg:text-[15px]"
             >
               Billetterie
             </Link>
@@ -235,7 +235,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-brand-ink lg:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-brand-ink min-[900px]:hidden"
               aria-expanded={open}
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             >
@@ -247,7 +247,7 @@ export function SiteHeader() {
 
       {/* Mobile drawer */}
       {open && (
-        <div className="border-b border-border bg-card shadow-xl lg:hidden">
+        <div className="border-b border-border bg-card shadow-xl min-[900px]:hidden">
           <nav className="mx-auto max-w-7xl px-4 py-3" aria-label="Navigation mobile">
             {NAV.map((item) => (
               <div key={item.label} className="border-b border-border/70 last:border-0">
