@@ -19,13 +19,24 @@ export const Route = createFileRoute("/equipe-nationale/$id")({
 
 const POSITION_ORDER = ["Gardiens", "Défenseurs", "Milieux", "Attaquants", "Joueurs"];
 
-/** The senior team draws from the shared calendar; other selections carry their own. */
-function fixturesFor(sel: Selection): { date: string; time: string; opponent: string; competition: string; venue: string }[] {
-  if (sel.id === "a") {
-    return NATIONAL_FIXTURES.map((f: NationalFixture) => ({
+/** Name of the side Tunisia faces; for away fixtures the listed "team" is the host. */
+function opponentLabel(f: { team: string; opponent: string }): string {
+  return f.team.startsWith("Tunisie") ? f.opponent : `${f.team} (extérieur)`;
+}
+
+/**
+ * Selections with entries in the shared calendar (senior team, U23, U20) read from it;
+ * the others fall back to the content carried by their own selection data.
+ */
+function fixturesFor(
+  sel: Selection,
+): { date: string; time: string; opponent: string; competition: string; venue: string }[] {
+  const shared = NATIONAL_FIXTURES.filter((f: NationalFixture) => (f.squad ?? "a") === sel.id);
+  if (sel.id === "a" || shared.length > 0) {
+    return shared.map((f) => ({
       date: f.date,
       time: f.time,
-      opponent: f.opponent,
+      opponent: opponentLabel(f),
       competition: f.competition,
       venue: f.venue,
     }));
@@ -39,11 +50,14 @@ function fixturesFor(sel: Selection): { date: string; time: string; opponent: st
   }));
 }
 
-function resultsFor(sel: Selection): { date: string; opponent: string; competition: string; score: string }[] {
-  if (sel.id === "a") {
-    return NATIONAL_RESULTS.map((r: NationalResult) => ({
+function resultsFor(
+  sel: Selection,
+): { date: string; opponent: string; competition: string; score: string }[] {
+  const shared = NATIONAL_RESULTS.filter((r: NationalResult) => (r.squad ?? "a") === sel.id);
+  if (sel.id === "a" || shared.length > 0) {
+    return shared.map((r) => ({
       date: r.date,
-      opponent: r.opponent,
+      opponent: opponentLabel(r),
       competition: r.competition,
       score: r.score,
     }));
@@ -164,7 +178,9 @@ function SelectionPage() {
               <ul className="mt-4 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
                 {sel.staff.map((s) => (
                   <li key={s.role} className="px-4 py-3">
-                    <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{s.role}</p>
+                    <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                      {s.role}
+                    </p>
                     <p className="mt-0.5 text-sm font-bold">{s.name}</p>
                   </li>
                 ))}
@@ -178,7 +194,10 @@ function SelectionPage() {
               ) : (
                 <ul className="mt-4 space-y-3">
                   {fixtures.map((f) => (
-                    <li key={f.date + f.opponent} className="rounded-2xl border border-border bg-card p-4">
+                    <li
+                      key={f.date + f.opponent}
+                      className="rounded-2xl border border-border bg-card p-4"
+                    >
                       <p className="eyebrow text-muted-foreground">
                         {f.date} · {f.time}
                       </p>

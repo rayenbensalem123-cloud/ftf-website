@@ -60,14 +60,22 @@ function EquipeNationale() {
               >
                 <p className="eyebrow text-brand-red">Sélection</p>
                 <h3 className="title-section mt-1.5">
-                  <Link to="/equipe-nationale/$id" params={{ id: t.id }} className="hover:text-brand-red">
+                  <Link
+                    to="/equipe-nationale/$id"
+                    params={{ id: t.id }}
+                    className="hover:text-brand-red"
+                  >
                     {t.name}
                   </Link>
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground">{t.detail}</p>
                 <p className="mt-1 text-xs text-muted-foreground">Sélectionneur : {t.coach}</p>
                 <div className="mt-4 flex flex-wrap gap-4 text-sm font-bold">
-                  <Link to="/equipe-nationale/$id" params={{ id: t.id }} className="text-brand-red hover:underline">
+                  <Link
+                    to="/equipe-nationale/$id"
+                    params={{ id: t.id }}
+                    className="text-brand-red hover:underline"
+                  >
                     Effectif & calendrier →
                   </Link>
                 </div>

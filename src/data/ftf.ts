@@ -26,8 +26,12 @@ export const CLUBS: Club[] = [
 export const clubByShort = (short: string): Club | undefined =>
   CLUBS.find((c) => c.short.toLowerCase() === short.toLowerCase());
 
+/** Which selection a fixture/result belongs to (matches `Selection.id`); defaults to "a". */
+export type NationalSquad = "a" | "u23" | "u20" | "u17" | "fem" | "futsal";
+
 export type NationalFixture = {
   id: string;
+  squad?: NationalSquad;
   team: string;
   opponent: string;
   competition: string;
@@ -39,6 +43,7 @@ export type NationalFixture = {
 
 export type NationalResult = {
   id: string;
+  squad?: NationalSquad;
   team: string;
   opponent: string;
   competition: string;
@@ -47,11 +52,22 @@ export type NationalResult = {
 };
 
 /**
- * National-team schedule (équipe nationale A, men). Add fixtures and results here and the
+ * National-team schedule (senior men, U23 and U20). Add fixtures and results here and the
  * Calendrier and Billetterie pages pick them up — nothing else to change. Set
  * `ticketsOpen: true` on a fixture to make it bookable on the Billetterie page.
  */
 export const NATIONAL_FIXTURES: NationalFixture[] = [
+  {
+    id: "gab-tun-u23-2026-11-09",
+    squad: "u23",
+    team: "Gabon",
+    opponent: "Tunisie U23",
+    competition: "Éliminatoires CAN U23 2027 · 2e tour (aller)",
+    date: "Lun 9 nov 2026",
+    time: "Heure à confirmer",
+    venue: "Stade à confirmer",
+    ticketsOpen: false,
+  },
   {
     id: "tun-lby-2026-11-13",
     team: "Tunisie",
@@ -59,7 +75,7 @@ export const NATIONAL_FIXTURES: NationalFixture[] = [
     competition: "Éliminatoires CAN 2027 · Groupe H",
     date: "Ven 13 nov 2026",
     time: "17:00",
-    venue: "Radès (stade à confirmer)",
+    venue: "Stade Taïeb Mhiri, Sfax",
     ticketsOpen: false,
   },
   {
@@ -70,6 +86,17 @@ export const NATIONAL_FIXTURES: NationalFixture[] = [
     date: "Mar 17 nov 2026",
     time: "17:00",
     venue: "En Libye (stade à confirmer)",
+    ticketsOpen: false,
+  },
+  {
+    id: "tun-gab-u23-2026-11-17",
+    squad: "u23",
+    team: "Tunisie U23",
+    opponent: "Gabon",
+    competition: "Éliminatoires CAN U23 2027 · 2e tour (retour)",
+    date: "Mar 17 nov 2026",
+    time: "Heure à confirmer",
+    venue: "Stade à confirmer",
     ticketsOpen: false,
   },
   {
@@ -94,8 +121,44 @@ export const NATIONAL_FIXTURES: NationalFixture[] = [
   },
 ];
 
-/** Scores are written Tunisie first. Add newest results at the top. */
+/** Scores are written with the Tunisian team first. Newest results at the top. */
 export const NATIONAL_RESULTS: NationalResult[] = [
+  {
+    id: "ben-tun-u23-2026-10-05",
+    squad: "u23",
+    team: "Tunisie U23",
+    opponent: "Bénin",
+    competition: "Éliminatoires CAN U23 2027 · 1er tour (retour) · qualifiée (2–1 cumulé)",
+    date: "5 oct 2026",
+    score: "0–1",
+  },
+  {
+    id: "tun-lby-u20-2026-10-03",
+    squad: "u20",
+    team: "Tunisie U20",
+    opponent: "Libye",
+    competition: "Éliminatoires CAN U20 2027 · tournoi UNAF",
+    date: "3 oct 2026",
+    score: "1–1",
+  },
+  {
+    id: "tun-egy-u20-2026-09-30",
+    squad: "u20",
+    team: "Tunisie U20",
+    opponent: "Égypte",
+    competition: "Éliminatoires CAN U20 2027 · tournoi UNAF",
+    date: "30 sept 2026",
+    score: "1–2",
+  },
+  {
+    id: "tun-ben-u23-2026-09-29",
+    squad: "u23",
+    team: "Tunisie U23",
+    opponent: "Bénin",
+    competition: "Éliminatoires CAN U23 2027 · 1er tour (aller)",
+    date: "29 sept 2026",
+    score: "2–0",
+  },
   {
     id: "tun-bwa-2026-09-28",
     team: "Tunisie",
@@ -105,10 +168,28 @@ export const NATIONAL_RESULTS: NationalResult[] = [
     score: "2–2",
   },
   {
+    id: "tun-mar-u20-2026-09-27",
+    squad: "u20",
+    team: "Tunisie U20",
+    opponent: "Maroc",
+    competition: "Éliminatoires CAN U20 2027 · tournoi UNAF",
+    date: "27 sept 2026",
+    score: "0–0",
+  },
+  {
     id: "tun-uga-2026-09-24",
     team: "Tunisie",
     opponent: "Ouganda",
     competition: "Éliminatoires CAN 2027 · Groupe H",
+    date: "24 sept 2026",
+    score: "1–1",
+  },
+  {
+    id: "tun-alg-u20-2026-09-24",
+    squad: "u20",
+    team: "Tunisie U20",
+    opponent: "Algérie",
+    competition: "Éliminatoires CAN U20 2027 · tournoi UNAF",
     date: "24 sept 2026",
     score: "1–1",
   },
