@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, ChevronDown, Menu, Search, X } from "lucide-react";
-import { ARTICLES, DOCS, FTF_LOGO, NATIONAL_TEAMS, articleById } from "@/data/ftf";
+import { ARTICLES, DOCS, FTF_LOGO, articleById } from "@/data/ftf";
+import { SELECTIONS } from "@/data/selections";
 import {
   CommandDialog,
   CommandEmpty,
@@ -11,7 +12,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
-type NavChild = { to: string; label: string; desc?: string };
+type NavChild = { to: string; label: string; desc?: string; id?: string };
 type NavItem = { label: string; to: string; match: string[]; children?: NavChild[] };
 
 const NAV: NavItem[] = [
@@ -20,8 +21,9 @@ const NAV: NavItem[] = [
     label: "Équipes nationales",
     to: "/equipe-nationale",
     match: ["/equipe-nationale"],
-    children: NATIONAL_TEAMS.map((t) => ({
+    children: SELECTIONS.map((t) => ({
       to: "/equipe-nationale",
+      id: t.id,
       label: t.name,
       desc: t.detail,
     })),
@@ -72,7 +74,12 @@ function NavDrop({ item, active }: { item: NavItem; active: boolean }) {
             className={wide ? "mega-panel grid min-w-[34rem] grid-cols-2 gap-x-2" : "mega-panel"}
           >
             {item.children.map((c) => (
-              <Link key={c.label} to={c.to} className="mega-item">
+              <Link
+                key={c.label}
+                to={c.id ? "/equipe-nationale/$id" : c.to}
+                {...(c.id ? { params: { id: c.id } } : {})}
+                className="mega-item"
+              >
                 {c.label}
                 {c.desc && <small>{c.desc}</small>}
               </Link>
@@ -270,7 +277,8 @@ export function SiteHeader() {
                       {item.children.map((c) => (
                         <Link
                           key={c.label}
-                          to={c.to}
+                          to={c.id ? "/equipe-nationale/$id" : c.to}
+                          {...(c.id ? { params: { id: c.id } } : {})}
                           className="block py-2.5 text-[15px] text-foreground/80"
                         >
                           {c.label}

@@ -1,10 +1,11 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { NATIONAL_TEAMS, STADIUM_IMG, TROPHY_IMG } from "@/data/ftf";
+import { STADIUM_IMG, TROPHY_IMG } from "@/data/ftf";
+import { SELECTIONS } from "@/data/selections";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { PageHead } from "@/components/page-head";
 
-export const Route = createFileRoute("/equipe-nationale")({
+export const Route = createFileRoute("/equipe-nationale/")({
   head: () => ({ meta: [{ title: "Équipes Nationales — FTF" }] }),
   component: EquipeNationale,
 });
@@ -52,27 +53,22 @@ function EquipeNationale() {
         <div className="mt-12">
           <PageHead eyebrow="Sélections" title="Toutes les sélections" />
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {NATIONAL_TEAMS.map((t) => (
+            {SELECTIONS.map((t) => (
               <article
                 key={t.id}
                 className="rounded-3xl border border-border bg-card p-5 transition hover:border-brand-red hover:shadow-lg"
               >
                 <p className="eyebrow text-brand-red">Sélection</p>
-                <h3 className="title-section mt-1.5">{t.name}</h3>
+                <h3 className="title-section mt-1.5">
+                  <Link to="/equipe-nationale/$id" params={{ id: t.id }} className="hover:text-brand-red">
+                    {t.name}
+                  </Link>
+                </h3>
                 <p className="mt-2 text-sm text-muted-foreground">{t.detail}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Sélectionneur : {t.coach}</p>
                 <div className="mt-4 flex flex-wrap gap-4 text-sm font-bold">
-                  <Link to="/actualites" className="text-brand-red hover:underline">
-                    Actualités →
-                  </Link>
-                  <Link to="/competition" className="text-brand-red hover:underline">
-                    Résultats →
-                  </Link>
-                  <Link
-                    to="/actualites/$id"
-                    params={{ id: "squad-can" }}
-                    className="text-brand-red hover:underline"
-                  >
-                    Effectif →
+                  <Link to="/equipe-nationale/$id" params={{ id: t.id }} className="text-brand-red hover:underline">
+                    Effectif & calendrier →
                   </Link>
                 </div>
               </article>

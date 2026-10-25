@@ -15,12 +15,13 @@ import { Route as ClassementRouteImport } from './routes/classement'
 import { Route as CompetitionRouteImport } from './routes/competition'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DocumentsRouteImport } from './routes/documents'
-import { Route as EquipeNationaleRouteImport } from './routes/equipe-nationale'
 import { Route as FantasyCoachRouteImport } from './routes/fantasy-coach'
 import { Route as ActualitesIndexRouteImport } from './routes/actualites/index'
 import { Route as ActualitesIdRouteImport } from './routes/actualites/$id'
 import { Route as ClubsIndexRouteImport } from './routes/clubs/index'
 import { Route as ClubsShortRouteImport } from './routes/clubs/$short'
+import { Route as EquipeNationaleIndexRouteImport } from './routes/equipe-nationale/index'
+import { Route as EquipeNationaleIdRouteImport } from './routes/equipe-nationale/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,11 +53,6 @@ const DocumentsRoute = DocumentsRouteImport.update({
   path: '/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EquipeNationaleRoute = EquipeNationaleRouteImport.update({
-  id: '/equipe-nationale',
-  path: '/equipe-nationale',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FantasyCoachRoute = FantasyCoachRouteImport.update({
   id: '/fantasy-coach',
   path: '/fantasy-coach',
@@ -82,6 +78,16 @@ const ClubsShortRoute = ClubsShortRouteImport.update({
   path: '/clubs/$short',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EquipeNationaleIndexRoute = EquipeNationaleIndexRouteImport.update({
+  id: '/equipe-nationale/',
+  path: '/equipe-nationale/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EquipeNationaleIdRoute = EquipeNationaleIdRouteImport.update({
+  id: '/equipe-nationale/$id',
+  path: '/equipe-nationale/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -90,12 +96,13 @@ export interface FileRoutesByFullPath {
   '/competition': typeof CompetitionRoute
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
-  '/equipe-nationale': typeof EquipeNationaleRoute
   '/fantasy-coach': typeof FantasyCoachRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
+  '/equipe-nationale/$id': typeof EquipeNationaleIdRoute
   '/actualites/': typeof ActualitesIndexRoute
   '/clubs/': typeof ClubsIndexRoute
+  '/equipe-nationale/': typeof EquipeNationaleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -104,12 +111,13 @@ export interface FileRoutesByTo {
   '/competition': typeof CompetitionRoute
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
-  '/equipe-nationale': typeof EquipeNationaleRoute
   '/fantasy-coach': typeof FantasyCoachRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
+  '/equipe-nationale/$id': typeof EquipeNationaleIdRoute
   '/actualites': typeof ActualitesIndexRoute
   '/clubs': typeof ClubsIndexRoute
+  '/equipe-nationale': typeof EquipeNationaleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -119,12 +127,13 @@ export interface FileRoutesById {
   '/competition': typeof CompetitionRoute
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
-  '/equipe-nationale': typeof EquipeNationaleRoute
   '/fantasy-coach': typeof FantasyCoachRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
+  '/equipe-nationale/$id': typeof EquipeNationaleIdRoute
   '/actualites/': typeof ActualitesIndexRoute
   '/clubs/': typeof ClubsIndexRoute
+  '/equipe-nationale/': typeof EquipeNationaleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -135,12 +144,13 @@ export interface FileRouteTypes {
     | '/competition'
     | '/contact'
     | '/documents'
-    | '/equipe-nationale'
     | '/fantasy-coach'
     | '/actualites/$id'
     | '/clubs/$short'
+    | '/equipe-nationale/$id'
     | '/actualites/'
     | '/clubs/'
+    | '/equipe-nationale/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -149,12 +159,13 @@ export interface FileRouteTypes {
     | '/competition'
     | '/contact'
     | '/documents'
-    | '/equipe-nationale'
     | '/fantasy-coach'
     | '/actualites/$id'
     | '/clubs/$short'
+    | '/equipe-nationale/$id'
     | '/actualites'
     | '/clubs'
+    | '/equipe-nationale'
   id:
     | '__root__'
     | '/'
@@ -163,12 +174,13 @@ export interface FileRouteTypes {
     | '/competition'
     | '/contact'
     | '/documents'
-    | '/equipe-nationale'
     | '/fantasy-coach'
     | '/actualites/$id'
     | '/clubs/$short'
+    | '/equipe-nationale/$id'
     | '/actualites/'
     | '/clubs/'
+    | '/equipe-nationale/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -178,12 +190,13 @@ export interface RootRouteChildren {
   CompetitionRoute: typeof CompetitionRoute
   ContactRoute: typeof ContactRoute
   DocumentsRoute: typeof DocumentsRoute
-  EquipeNationaleRoute: typeof EquipeNationaleRoute
   FantasyCoachRoute: typeof FantasyCoachRoute
   ActualitesIdRoute: typeof ActualitesIdRoute
   ClubsShortRoute: typeof ClubsShortRoute
+  EquipeNationaleIdRoute: typeof EquipeNationaleIdRoute
   ActualitesIndexRoute: typeof ActualitesIndexRoute
   ClubsIndexRoute: typeof ClubsIndexRoute
+  EquipeNationaleIndexRoute: typeof EquipeNationaleIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -230,13 +243,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocumentsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/equipe-nationale': {
-      id: '/equipe-nationale'
-      path: '/equipe-nationale'
-      fullPath: '/equipe-nationale'
-      preLoaderRoute: typeof EquipeNationaleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/fantasy-coach': {
       id: '/fantasy-coach'
       path: '/fantasy-coach'
@@ -272,6 +278,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClubsShortRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/equipe-nationale/': {
+      id: '/equipe-nationale/'
+      path: '/equipe-nationale'
+      fullPath: '/equipe-nationale/'
+      preLoaderRoute: typeof EquipeNationaleIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/equipe-nationale/$id': {
+      id: '/equipe-nationale/$id'
+      path: '/equipe-nationale/$id'
+      fullPath: '/equipe-nationale/$id'
+      preLoaderRoute: typeof EquipeNationaleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -282,12 +302,13 @@ const rootRouteChildren: RootRouteChildren = {
   CompetitionRoute: CompetitionRoute,
   ContactRoute: ContactRoute,
   DocumentsRoute: DocumentsRoute,
-  EquipeNationaleRoute: EquipeNationaleRoute,
   FantasyCoachRoute: FantasyCoachRoute,
   ActualitesIdRoute: ActualitesIdRoute,
   ClubsShortRoute: ClubsShortRoute,
+  EquipeNationaleIdRoute: EquipeNationaleIdRoute,
   ActualitesIndexRoute: ActualitesIndexRoute,
   ClubsIndexRoute: ClubsIndexRoute,
+  EquipeNationaleIndexRoute: EquipeNationaleIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
