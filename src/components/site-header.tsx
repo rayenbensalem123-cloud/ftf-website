@@ -210,6 +210,7 @@ export function SiteHeader() {
             <img src={FTF_LOGO} alt="" className="h-12 w-12 object-contain lg:h-14 lg:w-14" />
             <span className="font-display text-[13px] font-extrabold uppercase leading-[1.15] tracking-[0.04em] text-brand-ink lg:text-[15px]">
               <span className="block">Fédération Tunisienne</span>
+              {' '}
               <span className="block">de Football</span>
             </span>
           </Link>

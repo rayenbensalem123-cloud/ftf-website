@@ -80,7 +80,7 @@ function Index() {
         <section className="relative z-10 mx-auto -mt-20 max-w-7xl px-4">
           <div className="overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-2xl md:p-8">
             <div className="flex items-center justify-between gap-4">
-              <p className="eyebrow text-brand-red">Les sélections</p>
+              <h2 className="eyebrow text-brand-red">Les sélections</h2>
               <Link
                 to="/equipe-nationale"
                 className="text-xs font-bold text-muted-foreground hover:text-brand-red"
