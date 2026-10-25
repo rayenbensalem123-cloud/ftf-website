@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { NextMatch } from "@/components/next-match";
 import { ARTICLES, NATIONAL_TEAMS, STADIUM_IMG, TROPHY_IMG } from "@/data/ftf";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -73,6 +74,7 @@ function Index() {
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
+            <NextMatch />
           </div>
         </section>
 
@@ -92,7 +94,8 @@ function Index() {
               {NATIONAL_TEAMS.map((t) => (
                 <Link
                   key={t.id}
-                  to="/equipe-nationale"
+                  to="/equipe-nationale/$id"
+                  params={{ id: t.id }}
                   className="group flex flex-col gap-1.5 bg-card px-5 py-5 transition hover:bg-brand-paper"
                 >
                   <h3 className="title-card group-hover:text-brand-red">{t.name}</h3>

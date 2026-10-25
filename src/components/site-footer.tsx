@@ -11,6 +11,7 @@ const COMPETITIONS = [
 
 const FEDERATION = [
   { to: "/actualites", label: "Actualités" },
+  { to: "/histoire", label: "Histoire" },
   { to: "/documents", label: "Documents officiels" },
   { to: "/contact", label: "Contact" },
 ];

@@ -16,12 +16,14 @@ import { Route as CompetitionRouteImport } from './routes/competition'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DocumentsRouteImport } from './routes/documents'
 import { Route as FantasyCoachRouteImport } from './routes/fantasy-coach'
+import { Route as HistoireRouteImport } from './routes/histoire'
 import { Route as ActualitesIndexRouteImport } from './routes/actualites/index'
 import { Route as ActualitesIdRouteImport } from './routes/actualites/$id'
 import { Route as ClubsIndexRouteImport } from './routes/clubs/index'
 import { Route as ClubsShortRouteImport } from './routes/clubs/$short'
 import { Route as EquipeNationaleIndexRouteImport } from './routes/equipe-nationale/index'
 import { Route as EquipeNationaleIdRouteImport } from './routes/equipe-nationale/$id'
+import { Route as MatchIdRouteImport } from './routes/match.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +60,11 @@ const FantasyCoachRoute = FantasyCoachRouteImport.update({
   path: '/fantasy-coach',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HistoireRoute = HistoireRouteImport.update({
+  id: '/histoire',
+  path: '/histoire',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActualitesIndexRoute = ActualitesIndexRouteImport.update({
   id: '/actualites/',
   path: '/actualites/',
@@ -88,6 +95,11 @@ const EquipeNationaleIdRoute = EquipeNationaleIdRouteImport.update({
   path: '/equipe-nationale/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MatchIdRoute = MatchIdRouteImport.update({
+  id: '/match/$id',
+  path: '/match/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -97,9 +109,11 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
   '/fantasy-coach': typeof FantasyCoachRoute
+  '/histoire': typeof HistoireRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
   '/equipe-nationale/$id': typeof EquipeNationaleIdRoute
+  '/match/$id': typeof MatchIdRoute
   '/actualites/': typeof ActualitesIndexRoute
   '/clubs/': typeof ClubsIndexRoute
   '/equipe-nationale/': typeof EquipeNationaleIndexRoute
@@ -112,9 +126,11 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
   '/fantasy-coach': typeof FantasyCoachRoute
+  '/histoire': typeof HistoireRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
   '/equipe-nationale/$id': typeof EquipeNationaleIdRoute
+  '/match/$id': typeof MatchIdRoute
   '/actualites': typeof ActualitesIndexRoute
   '/clubs': typeof ClubsIndexRoute
   '/equipe-nationale': typeof EquipeNationaleIndexRoute
@@ -128,9 +144,11 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/documents': typeof DocumentsRoute
   '/fantasy-coach': typeof FantasyCoachRoute
+  '/histoire': typeof HistoireRoute
   '/actualites/$id': typeof ActualitesIdRoute
   '/clubs/$short': typeof ClubsShortRoute
   '/equipe-nationale/$id': typeof EquipeNationaleIdRoute
+  '/match/$id': typeof MatchIdRoute
   '/actualites/': typeof ActualitesIndexRoute
   '/clubs/': typeof ClubsIndexRoute
   '/equipe-nationale/': typeof EquipeNationaleIndexRoute
@@ -145,9 +163,11 @@ export interface FileRouteTypes {
     | '/contact'
     | '/documents'
     | '/fantasy-coach'
+    | '/histoire'
     | '/actualites/$id'
     | '/clubs/$short'
     | '/equipe-nationale/$id'
+    | '/match/$id'
     | '/actualites/'
     | '/clubs/'
     | '/equipe-nationale/'
@@ -160,9 +180,11 @@ export interface FileRouteTypes {
     | '/contact'
     | '/documents'
     | '/fantasy-coach'
+    | '/histoire'
     | '/actualites/$id'
     | '/clubs/$short'
     | '/equipe-nationale/$id'
+    | '/match/$id'
     | '/actualites'
     | '/clubs'
     | '/equipe-nationale'
@@ -175,9 +197,11 @@ export interface FileRouteTypes {
     | '/contact'
     | '/documents'
     | '/fantasy-coach'
+    | '/histoire'
     | '/actualites/$id'
     | '/clubs/$short'
     | '/equipe-nationale/$id'
+    | '/match/$id'
     | '/actualites/'
     | '/clubs/'
     | '/equipe-nationale/'
@@ -191,9 +215,11 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DocumentsRoute: typeof DocumentsRoute
   FantasyCoachRoute: typeof FantasyCoachRoute
+  HistoireRoute: typeof HistoireRoute
   ActualitesIdRoute: typeof ActualitesIdRoute
   ClubsShortRoute: typeof ClubsShortRoute
   EquipeNationaleIdRoute: typeof EquipeNationaleIdRoute
+  MatchIdRoute: typeof MatchIdRoute
   ActualitesIndexRoute: typeof ActualitesIndexRoute
   ClubsIndexRoute: typeof ClubsIndexRoute
   EquipeNationaleIndexRoute: typeof EquipeNationaleIndexRoute
@@ -250,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FantasyCoachRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/histoire': {
+      id: '/histoire'
+      path: '/histoire'
+      fullPath: '/histoire'
+      preLoaderRoute: typeof HistoireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/actualites/': {
       id: '/actualites/'
       path: '/actualites'
@@ -292,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EquipeNationaleIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/match/$id': {
+      id: '/match/$id'
+      path: '/match/$id'
+      fullPath: '/match/$id'
+      preLoaderRoute: typeof MatchIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -303,9 +343,11 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DocumentsRoute: DocumentsRoute,
   FantasyCoachRoute: FantasyCoachRoute,
+  HistoireRoute: HistoireRoute,
   ActualitesIdRoute: ActualitesIdRoute,
   ClubsShortRoute: ClubsShortRoute,
   EquipeNationaleIdRoute: EquipeNationaleIdRoute,
+  MatchIdRoute: MatchIdRoute,
   ActualitesIndexRoute: ActualitesIndexRoute,
   ClubsIndexRoute: ClubsIndexRoute,
   EquipeNationaleIndexRoute: EquipeNationaleIndexRoute,

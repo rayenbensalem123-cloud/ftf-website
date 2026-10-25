@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { NATIONAL_FIXTURES, NATIONAL_RESULTS } from "@/data/ftf";
+import { downloadIcs, fixtureIcs } from "@/lib/kickoff";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { PageHead } from "@/components/page-head";
@@ -59,6 +60,23 @@ function Calendrier() {
                       {f.team} <span className="text-muted-foreground">vs</span> {f.opponent}
                     </p>
                     <p className="mt-3 text-center text-sm text-muted-foreground">{f.venue}</p>
+                    <div className="mt-4 flex flex-wrap justify-center gap-3 text-[13px] font-bold">
+                      <Link
+                        to="/match/$id"
+                        params={{ id: f.id }}
+                        className="text-brand-red hover:underline"
+                      >
+                        Détails
+                      </Link>
+                      {fixtureIcs(f) && (
+                        <button
+                          onClick={() => downloadIcs(f)}
+                          className="text-muted-foreground hover:text-brand-red"
+                        >
+                          + Calendrier
+                        </button>
+                      )}
+                    </div>
                     {f.ticketsOpen && (
                       <Link
                         to="/billetterie"
@@ -83,13 +101,17 @@ function Calendrier() {
                     key={r.id}
                     className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card px-5 py-3.5"
                   >
-                    <div className="flex items-center gap-3 font-bold">
+                    <Link
+                      to="/match/$id"
+                      params={{ id: r.id }}
+                      className="flex items-center gap-3 font-bold hover:text-brand-red"
+                    >
                       {r.team}
                       <span className="score rounded bg-brand-ink px-2 py-0.5 text-lg leading-none text-white">
                         {r.score}
                       </span>
                       {r.opponent}
-                    </div>
+                    </Link>
                     <span className="text-sm text-muted-foreground">
                       {r.competition} · {r.date}
                     </span>

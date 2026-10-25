@@ -14,6 +14,7 @@ const PLAN = [
   { to: "/competition", label: "Calendrier & résultats" },
   { to: "/actualites", label: "Actualités" },
   { to: "/fantasy-coach", label: "Fantasy Coach" },
+  { to: "/histoire", label: "Histoire" },
   { to: "/documents", label: "Documents" },
   { to: "/billetterie", label: "Billetterie" },
 ] as const;

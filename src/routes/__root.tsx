@@ -91,6 +91,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Site officiel du football tunisien : Aigles de Carthage, équipes nationales, actualités et documents officiels.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://ftf-website-nine.vercel.app/og.png" },
+      { name: "twitter:image", content: "https://ftf-website-nine.vercel.app/og.png" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
