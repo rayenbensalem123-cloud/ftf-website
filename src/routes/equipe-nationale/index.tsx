@@ -37,11 +37,10 @@ function EquipeNationale() {
       </section>
 
       <main className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2">
           {[
             ["7", "Participations Coupe du Monde"],
             ["2004", "Champions d'Afrique"],
-            ["27", "Joueurs convoqués"],
           ].map(([n, l]) => (
             <div key={l} className="rounded-3xl border border-border bg-card p-6">
               <div className="score text-6xl leading-none text-brand-red">{n}</div>
@@ -76,7 +75,7 @@ function EquipeNationale() {
                     params={{ id: t.id }}
                     className="text-brand-red hover:underline"
                   >
-                    Effectif & calendrier →
+                    Staff & calendrier →
                   </Link>
                 </div>
               </article>

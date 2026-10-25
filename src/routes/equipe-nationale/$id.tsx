@@ -6,7 +6,7 @@ import {
   type NationalFixture,
   type NationalResult,
 } from "@/data/ftf";
-import { SELECTIONS, selectionById, type Player, type Selection } from "@/data/selections";
+import { SELECTIONS, selectionById, type Selection } from "@/data/selections";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -16,8 +16,6 @@ export const Route = createFileRoute("/equipe-nationale/$id")({
   }),
   component: SelectionPage,
 });
-
-const POSITION_ORDER = ["Gardiens", "Défenseurs", "Milieux", "Attaquants", "Joueurs"];
 
 /** Name of the side Tunisia faces; for away fixtures the listed "team" is the host. */
 function opponentLabel(f: { team: string; opponent: string }): string {
@@ -70,16 +68,6 @@ function resultsFor(
   }));
 }
 
-function PlayerRow({ p }: { p: Player }) {
-  return (
-    <li className="flex items-center gap-4 px-4 py-3 transition hover:bg-brand-paper">
-      <span className="score w-8 shrink-0 text-right text-lg text-brand-red">{p.num}</span>
-      <span className="min-w-0 flex-1 truncate text-sm font-bold">{p.name}</span>
-      <span className="hidden shrink-0 text-sm text-muted-foreground sm:block">{p.club}</span>
-    </li>
-  );
-}
-
 function SelectionPage() {
   const { id } = Route.useParams();
   const sel = selectionById(id);
@@ -105,7 +93,6 @@ function SelectionPage() {
 
   const fixtures = fixturesFor(sel);
   const results = resultsFor(sel);
-  const positions = POSITION_ORDER.filter((pos) => sel.squad.some((p) => p.pos === pos));
   const others = SELECTIONS.filter((s) => s.id !== sel.id);
 
   return (
@@ -149,30 +136,9 @@ function SelectionPage() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-3">
-          {/* Squad */}
-          <section className="lg:col-span-2">
-            <h2 className="title-section">Effectif</h2>
-            <div className="mt-5 space-y-6">
-              {positions.map((pos) => (
-                <div key={pos}>
-                  <h3 className="eyebrow text-brand-red">
-                    {pos} ({sel.squad.filter((p) => p.pos === pos).length})
-                  </h3>
-                  <ul className="mt-2 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
-                    {sel.squad
-                      .filter((p) => p.pos === pos)
-                      .map((p) => (
-                        <PlayerRow key={p.num} p={p} />
-                      ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Right rail: staff + calendar */}
-          <div className="space-y-10">
+        <div className="mt-12 grid gap-10 lg:grid-cols-2">
+          {/* Staff + calendar */}
+          <div className="contents">
             <section>
               <h2 className="title-section">Staff technique</h2>
               <ul className="mt-4 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
