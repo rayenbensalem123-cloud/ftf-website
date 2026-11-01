@@ -290,3 +290,21 @@
     }
   }
 }
+
+/* Fantasy pitch: striped grass with soft vignette */
+.pitch {
+  background:
+    radial-gradient(ellipse at center, transparent 55%, oklch(0 0 0 / 0.25)),
+    repeating-linear-gradient(
+      180deg,
+      oklch(0.5 0.14 148) 0 56px,
+      oklch(0.46 0.13 148) 56px 112px
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

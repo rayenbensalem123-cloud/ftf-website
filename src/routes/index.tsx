@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trophy } from "lucide-react";
 import { NextMatch } from "@/components/next-match";
 import { ARTICLES, NATIONAL_TEAMS, STADIUM_IMG, TROPHY_IMG } from "@/data/ftf";
 import { SiteFooter } from "@/components/site-footer";
@@ -65,6 +65,13 @@ function Index() {
               >
                 Les équipes nationales
                 <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <Link
+                to="/fantasy-coach"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-brand-red px-6 text-sm font-bold text-white shadow-lg shadow-brand-red/30 transition hover:brightness-110"
+              >
+                <Trophy className="h-4 w-4" aria-hidden />
+                Jouer au Fantasy Coach
               </Link>
               <Link
                 to="/billetterie"
@@ -175,6 +182,54 @@ function Index() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── Fantasy Coach ───────────────────────────────────────────── */}
+        <section className="mx-auto max-w-7xl px-4 pb-14">
+          <div className="relative isolate grid items-center gap-8 overflow-hidden rounded-3xl bg-brand-ink p-6 text-white md:grid-cols-2 md:p-12">
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_30%,oklch(0.51_0.215_27/0.6),transparent_55%)]" />
+            <div>
+              <p className="eyebrow text-brand-gold">Jeu officiel</p>
+              <h2 className="title-page mt-2 text-4xl text-white md:text-5xl">
+                Devenez le coach de votre XI
+              </h2>
+              <p className="mt-4 max-w-md text-[15px] leading-relaxed text-white/70">
+                100 M de budget, 11 joueurs de Ligue 1, un capitaine qui compte double. Composez,
+                partagez, défiez vos amis.
+              </p>
+              <Link
+                to="/fantasy-coach"
+                className="mt-7 inline-flex h-12 items-center gap-2 rounded-full bg-white px-7 text-sm font-bold text-brand-ink transition hover:gap-3 hover:bg-brand-gold"
+              >
+                Composer mon équipe
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+            <Link to="/fantasy-coach" aria-label="Ouvrir Fantasy Coach" className="group block">
+              <div className="pitch relative mx-auto aspect-[4/3] max-w-md overflow-hidden rounded-2xl border-4 border-white/90 shadow-2xl transition duration-500 group-hover:-rotate-1 group-hover:scale-[1.03]">
+                <div className="absolute inset-x-4 top-1/2 h-px bg-white/30" />
+                {[
+                  [50, 14],
+                  [22, 32],
+                  [50, 34],
+                  [78, 32],
+                  [14, 54],
+                  [38, 56],
+                  [62, 56],
+                  [86, 54],
+                  [20, 78],
+                  [50, 80],
+                  [80, 78],
+                ].map(([x, y], i) => (
+                  <span
+                    key={i}
+                    className="absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-white/25 md:h-7 md:w-7"
+                    style={{ left: `${x}%`, top: `${y}%` }}
+                  />
+                ))}
+              </div>
+            </Link>
           </div>
         </section>
 
