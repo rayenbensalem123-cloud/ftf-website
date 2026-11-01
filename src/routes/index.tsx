@@ -210,17 +210,17 @@ function Index() {
               <div className="pitch relative mx-auto aspect-[4/3] max-w-md overflow-hidden rounded-2xl border-4 border-white/90 shadow-2xl transition duration-500 group-hover:-rotate-1 group-hover:scale-[1.03]">
                 <div className="absolute inset-x-4 top-1/2 h-px bg-white/30" />
                 {[
+                  [22, 16],
                   [50, 14],
-                  [22, 32],
-                  [50, 34],
-                  [78, 32],
-                  [14, 54],
-                  [38, 56],
-                  [62, 56],
-                  [86, 54],
-                  [20, 78],
-                  [50, 80],
-                  [80, 78],
+                  [78, 16],
+                  [22, 38],
+                  [50, 40],
+                  [78, 38],
+                  [14, 62],
+                  [38, 64],
+                  [62, 64],
+                  [86, 62],
+                  [50, 86],
                 ].map(([x, y], i) => (
                   <span
                     key={i}
